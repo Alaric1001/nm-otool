@@ -6,7 +6,7 @@
 #    By: asenat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 17:26:46 by asenat            #+#    #+#              #
-#    Updated: 2018/09/20 18:41:11 by asenat           ###   ########.fr        #
+#    Updated: 2018/09/23 22:03:02 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,11 +59,11 @@ include $(patsubst %, %/Sources.mk, $(SRC_DIRS))
 OBJ_DIRS	:= $(patsubst %, %/obj, $(SRC_DIRS))
 
 $(NM): $(LIBFT) $(OBJ_DIRS) $(OBJECTS) $(OBJECTS_NM) 
-	$(CC) $(LFLAGS) -o $(NM) $(OBJECTS) $(OBJECTS_NM)
+	$(CC) -o $(NM) $(OBJECTS) $(OBJECTS_NM) $(LFLAGS) 
 	@$(ECHO) $(BLUE)$(NM)$(GREEN) "linking complete"$(RESET)
 
 $(OTOOL): $(LIBFT) $(OBJ_DIRS) $(OBJECTS) $(OBJECTS_OTOOL) 
-	$(CC) $(LFLAGS) -o $(OTOOL) $(OBJECTS) $(OBJECTS_OTOOL)
+	$(CC) -o $(OTOOL) $(OBJECTS) $(OBJECTS_OTOOL) $(LFLAGS)
 	@$(ECHO) $(BLUE)$(OTOOL)$(GREEN) "linking complete"$(RESET)
 
 ## Including compilation rules
