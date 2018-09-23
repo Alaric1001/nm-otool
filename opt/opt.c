@@ -6,16 +6,17 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:43:31 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/20 18:37:15 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/23 22:05:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "opt/opt.h"
 
 #include "libft/string/string.h"
-#include "libft/memory/memory.h"
 
-static t_opt	get_files(int ac, const char *av[], const char *files[])
+#include <stdlib.h>
+
+static t_opt	get_files(int ac, const char * const av[], const char *files[])
 {
 	t_opt	ret;
 	int		i;
@@ -51,7 +52,11 @@ t_opt			parse_options(const t_args *args, const char *files[])
 	while (i < args->count)
 	{
 		if (!ft_strcmp(args->args[++i], "--"))
+		{
 			ret |= get_files(args->count - i, &args->args[i + 1], files);
+			return (ret);
+		}
 	}
+	ret |= get_files(args->count, args->args, files);
 	return (ret);
 }
