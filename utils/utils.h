@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opt.h                                              :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/20 17:28:29 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/24 11:12:56 by asenat           ###   ########.fr       */
+/*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
+/*   Updated: 2018/09/24 13:31:58 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OPT_H
-# define OPT_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include <stdint.h>
+# include <sys/stat.h>
 
-# define OPT_ERR	0x0
-# define OPT_FILE	0x1
-
-typedef struct	s_args
+typedef struct 	s_file
 {
-	uint32_t	count;
-	const char	**args;
-}				t_args;
+	const char 	*name;
+	int			fd;
+	struct stat	*stats;
+}				t_file;
 
-typedef uint32_t t_opt;
-
-t_opt	parse_options(const t_args *args, const char **files[]);
-uint8_t	has_option(t_opt opt, uint32_t option);
+int		open_file(const char* filename, int oflags, t_file *file);
+void	close_file(t_file* file);
 
 #endif
