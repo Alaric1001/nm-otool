@@ -18,7 +18,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int				open_file(const char* filename, int oflags, t_file *file)
+uint8_t			open_file(const char* filename, int oflags, t_file *file)
 {
 	if ((file->fd = open(filename, oflags)) == -1)
 	{
