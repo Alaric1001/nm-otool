@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/24 16:01:12 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/24 19:39:33 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,24 @@ static int nm(t_opt opt, const char *files[])
 {
 	int		ret;
 	t_file	file;
+	t_map	mapped_file;
 
 	ret = 0;
 	(void)opt;
 	while (*files)
 	{
-		if (!open_file(*files, O_RDONLY, &file))
-			ret = 1;
-		else
+		if (open_file(*files, O_RDONLY, &file))
 		{
-			printf("name:%s, fd:%d, size:%lld\n", file.name, file.fd, file.stats->st_size);
+			if ((mapped_file = map_file(&file)).addr)
+			{
+				printf("name:%s, fd:%d, size:%lld\n", file.name, file.fd, file.stats->st_size);
+				//display_symbols(opt, mapped_file, file.stats->st_size);
+				unmap_file(&mapped_file, &file);
+			}
 			close_file(&file);
 		}
+		else
+			ret = 1;
 		++files;
 	}
 	return (ret);
