@@ -6,12 +6,12 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/24 19:39:33 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/27 17:11:51 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "nm/nm.h"
 #include "utils/utils.h"
-#include "opt/opt.h"
 
 #include "libft/output/output.h"
 
@@ -33,10 +33,11 @@ static int nm(t_opt opt, const char *files[])
 	{
 		if (open_file(*files, O_RDONLY, &file))
 		{
-			if ((mapped_file = map_file(&file)).addr)
+			if (map_file(&file, &mapped_file))
 			{
 				printf("name:%s, fd:%d, size:%lld\n", file.name, file.fd, file.stats->st_size);
-				//display_symbols(opt, mapped_file, file.stats->st_size);
+				if (!get_and_display_symbols(opt, &mapped_file))
+					ft_putstr_fd(PARSE_ERR,	STDERR_FILENO);
 				unmap_file(&mapped_file, &file);
 			}
 			close_file(&file);
