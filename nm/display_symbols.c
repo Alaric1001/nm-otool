@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/28 17:27:11 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/28 18:45:03 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,26 @@
 #include "utils/utils.h"
 #include "libft/output/obuff.h"
 
-static uint8_t	get_macho_sym(t_opt opt, const t_map *map, t_array *symbols)
+static void		free_machodata(t_macho_data *mdata)
+{
+	while (--mdata->symbols->nelems)
+		free((t_symbol*)(mdata->symbols->begin)++);
+	ft_memdel(&mdata->symbols->begin);
+	ft_memdel(&mdata->sections->begin);
+}
+
+static uint8_t	parse_command(const command_t *command, const t_map *map,
+		t_macho_data *mdata)
+{
+	if (command->cmd == LC_SEGMENT)
+		return (get_sections())
+	if (command->cmd == LC_SYMTAB)
+		return (get_static_symbols((const symcommand_t*)command, map,
+			mdata->symbols));
+	return (1);
+}
+
+static uint8_t	parse_macho(t_opt opt, const t_map *map, t_macho_data *mdata)
 {
 	const header64_t	*header;
 	const command_t		*command;
@@ -30,10 +49,9 @@ static uint8_t	get_macho_sym(t_opt opt, const t_map *map, t_array *symbols)
 		if (!(command = (const command_t*)safe_access(map->addr, shift,
 					header->sizeofcmds + get_struct_size(HEADER, map->type))))
 			return (0);
-		if (command->cmd == LC_SYMTAB
-			&& !get_static_symbols((const symcommand_t*)command, map, symbols))
+		if (!parse_command(command, map, mdata))
 		{
-			free_symbols(symbols);
+			free_machodata(mdata);
 			return (0);
 		}
 		shift += command->cmdsize;
@@ -71,16 +89,21 @@ static void		display_symbols(t_opt opt, const t_array *symbols, t_mtype mtype)
 
 uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 {
-	t_array	symbols;
+	t_array			symbols;
+	t_array			sections;
+	t_macho_data	mdata;
 
 	(void)opt;
 	symbols = (t_array){0, 0};
+	sections = (t_array){0, 0};
+	mdata = (t_macho_data){&symbols, &sections};
 	if (map->type == NONE)
 		return (0);
 //	if (map->type == ARCHIVE)
 //		return (display_arch_sym(opt, map));
-	if (!get_macho_sym(opt, map, &symbols))
+	if (!parse_macho(opt, map, &mdata))
 		return (0);
 	display_symbols(opt, &symbols, map->type);
+	free_machodata(&mdata);
 	return (1);
 }

@@ -6,21 +6,12 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/28 17:37:26 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/28 18:36:52 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 #include "utils/utils.h"
-
-#include "libft/memory/memory.h"
-
-void		free_symbols(t_array *symbols)
-{
-	while (--symbols->nelems)
-		free((t_symbol*)(symbols->begin)++);
-	symbols->begin = NULL;
-}
 
 static void	add_symbol(t_symbol *symbols, const char* sym_tab,
 		const nlist_t *nlist, const t_map *map)
