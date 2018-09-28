@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 16:07:29 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/28 16:42:49 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@
 # include <stdlib.h>
 # include <sys/stat.h>
 
-typedef struct 	s_file
-{
-	const char 	*name;
-	int			fd;
-	struct stat	*stats;
-}				t_file;
+# include "utils/typedefs.h"
 
 typedef enum	e_mtype
 {
@@ -35,6 +30,20 @@ typedef enum	e_mtype
 	NONE,
 }				t_mtype;
 
+typedef enum	e_mach_struct
+{
+	HEADER = 0,
+	NLIST = 2,
+	FAT_ARCH = 4,
+}				t_mach_struct;
+
+typedef struct 	s_file
+{
+	const char 	*name;
+	int			fd;
+	struct stat	*stats;
+}				t_file;
+
 typedef struct 	s_map
 {
 	size_t	size;
@@ -42,12 +51,5 @@ typedef struct 	s_map
 	void	*begin;
 	t_mtype	type;
 }				t_map;
-
-typedef enum	e_mach_struct
-{
-	HEADER = 0,
-	NLIST = 2,
-	FAT_ARCH = 4,
-}				t_mach_struct;
 
 #endif

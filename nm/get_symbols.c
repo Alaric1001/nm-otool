@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 15:36:58 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/28 17:37:26 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 #include "libft/memory/memory.h"
 
-void		free_symbols(t_symbols *symbols)
+void		free_symbols(t_array *symbols)
 {
-	while (--symbols->sym_nb)
-		free(symbols->symbols++);
-	symbols->symbols = NULL;
+	while (--symbols->nelems)
+		free((t_symbol*)(symbols->begin)++);
+	symbols->begin = NULL;
 }
 
 static void	add_symbol(t_symbol *symbols, const char* sym_tab,
@@ -38,18 +38,20 @@ static void	add_symbol(t_symbol *symbols, const char* sym_tab,
 		symbols->value = nlist->n_value;
 }
 
-static void	realloc_symbols(const t_symbol* new_symbols, t_symbols *symbols)
+static void	realloc_symbols(const t_symbol* new_symbols, t_array *symbols)
 {
-	size_t new_len;
+	size_t 		new_len;
+	t_symbol	*symbols_ptr;
 
 	new_len = 0;
 	while (new_symbols[new_len].nlist)
 		++new_len;
-	symbols->symbols = ft_realloc(symbols->symbols, symbols->sym_nb,
-			symbols->sym_nb + new_len);
-	ft_memcpy(symbols->symbols + symbols->sym_nb, new_symbols,
+	symbols->begin = ft_realloc(symbols->begin, symbols->nelems,
+			symbols->nelems + new_len);
+	symbols_ptr = (t_symbol*)symbols->begin;
+	ft_memcpy(symbols_ptr + symbols->nelems, new_symbols,
 			new_len * sizeof(t_symbol));
-	symbols->sym_nb += new_len;
+	symbols->nelems += new_len;
 }
 
 static uint8_t	get_static_symbols_routine(const symcommand_t *cmd,
@@ -76,7 +78,7 @@ static uint8_t	get_static_symbols_routine(const symcommand_t *cmd,
 }
 
 uint8_t		get_static_symbols(const symcommand_t *cmd, const t_map *map,
-						t_symbols *symbols)
+						t_array *symbols)
 {
 	const char		*s_table;
 	t_symbol		new_symbols[cmd->nsyms + 1];

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/26 18:14:59 by asenat           ###   ########.fr       */
+/*   Updated: 2018/09/28 17:27:11 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils/utils.h"
 #include "libft/output/obuff.h"
 
-static uint8_t	get_macho_sym(t_opt opt, const t_map *map, t_symbols *symbols)
+static uint8_t	get_macho_sym(t_opt opt, const t_map *map, t_array *symbols)
 {
 	const header64_t	*header;
 	const command_t		*command;
@@ -42,7 +42,7 @@ static uint8_t	get_macho_sym(t_opt opt, const t_map *map, t_symbols *symbols)
 	return (1);
 }
 
-static void		display_symbols(t_opt opt, const t_symbols *symbols, t_mtype mtype)
+static void		display_symbols(t_opt opt, const t_array *symbols, t_mtype mtype)
 {
 	size_t			i;
 	t_obuff			obuff;
@@ -51,9 +51,9 @@ static void		display_symbols(t_opt opt, const t_symbols *symbols, t_mtype mtype)
 	i = 0;
 	(void)opt;
 	obuff = (t_obuff){.cursor = 0, .fd = 1};
-	while (i < symbols->sym_nb)
+	while (i < symbols->nelems)
 	{
-		sym = symbols->symbols + i;
+		sym = (const t_symbol*)symbols->begin + i;
 		if (sym->name)
 		{
 
@@ -71,10 +71,10 @@ static void		display_symbols(t_opt opt, const t_symbols *symbols, t_mtype mtype)
 
 uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 {
-	t_symbols	symbols;
+	t_array	symbols;
 
 	(void)opt;
-	symbols = (t_symbols){0, 0};
+	symbols = (t_array){0, 0};
 	if (map->type == NONE)
 		return (0);
 //	if (map->type == ARCHIVE)
