@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/01 16:54:18 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 18:29:40 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ uint8_t	get_static_symbols(const t_symcommand *cmd, const t_map *map,
 void	add_value_to_obuff(uint64_t value, t_mtype mtype, t_obuff *obuff);
 void	add_type_to_obuff(const t_nlist *nlist, const t_segment* segments,
 			t_obuff *obuff);
+void	sort_symbols(t_array *symbols);
 #endif

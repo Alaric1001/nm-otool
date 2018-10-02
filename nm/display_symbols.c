@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/02 17:40:21 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 18:43:43 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "common/common.h"
 #include "libft/output/obuff.h"
 
-#include <stdio.h>
 static void		free_machodata(t_macho_data *mdata)
 {
 	t_segment	*seg;
@@ -115,6 +114,7 @@ uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 //		return (display_arch_sym(opt, map));
 	if (!parse_macho(opt, map, &mdata))
 		return (0);
+	sort_symbols(&symbols);
 	display_symbols(opt, &mdata, map->type);
 	free_machodata(&mdata);
 	return (1);

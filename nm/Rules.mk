@@ -23,3 +23,6 @@ nm/$(OBJECT_DIR)/nm.o: nm/nm.c nm/nm.h common/data_structures.h \
   common/typedefs.h libft/memory/memory.h opt/opt.h libft/output/obuff.h \
   common/common.h libft/output/output.h
 libft/output/output.h:
+nm/$(OBJECT_DIR)/sort_symbols.o: nm/sort_symbols.c nm/nm.h \
+  common/data_structures.h common/typedefs.h libft/memory/memory.h \
+  opt/opt.h libft/output/obuff.h libft/string/string.h
