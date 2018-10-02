@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/utils.h"
-#include "utils/typedefs.h"
+#include "common/common.h"
+#include "common/typedefs.h"
 
 #include "libft/memory/memory.h"
 

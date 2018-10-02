@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "nm/nm.h"
-#include "utils/utils.h"
+#include "common/common.h"
 
 static void	add_symbol(t_symbol *symbols, const char* sym_tab,
 		const t_nlist *nlist, const t_map *map)

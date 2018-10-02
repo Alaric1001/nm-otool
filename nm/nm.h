@@ -13,7 +13,7 @@
 #ifndef NM_H
 # define NM_H
 
-# include "utils/data_structures.h"
+# include "common/data_structures.h"
 # include "opt/opt.h"
 
 # include "libft/output/obuff.h"

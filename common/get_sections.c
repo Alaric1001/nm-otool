@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/utils.h"
+#include "common/common.h"
 #include <stdio.h>
 
 static uint32_t		get_nsects(const t_segcommand *cmd, const t_map *map)

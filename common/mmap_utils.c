@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mmap_utils.c                                       :+:      :+:    :+:   */
+/*   mmap_common.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/utils.h"
-#include "utils/typedefs.h"
+#include "common/common.h"
+#include "common/typedefs.h"
 
 #include "libft/output/output.h"
 

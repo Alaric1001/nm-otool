@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/utils.h"
-#include "utils/typedefs.h"
+#include "common/common.h"
+#include "common/typedefs.h"
 
 size_t	get_struct_size(t_mach_struct stype, t_mtype mtype)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils/utils.h"
+#include "common/common.h"
 
 const void	*safe_access(const void* addr, size_t shift, size_t limit)
 {

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/02 10:32:20 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 12:17:15 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef COMMON_H
+# define COMMON_H
 
-# include "utils/data_structures.h"
+# include "common/data_structures.h"
 
 # define PARSE_ERR "The file was not recognized as a valid object file\n"
 

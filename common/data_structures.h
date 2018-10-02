@@ -13,7 +13,7 @@
 #ifndef DATA_STRUCTURES_H
 # define DATA_STRUCTURES_H
 
-# include "utils/typedefs.h"
+# include "common/typedefs.h"
 
 # include "libft/memory/memory.h"
 

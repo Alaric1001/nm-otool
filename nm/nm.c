@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "nm/nm.h"
-#include "utils/utils.h"
+#include "common/common.h"
 
 #include "libft/output/output.h"
 

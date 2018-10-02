@@ -6,7 +6,7 @@
 #    By: asenat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 17:26:46 by asenat            #+#    #+#              #
-#    Updated: 2018/09/23 22:03:02 by asenat           ###   ########.fr        #
+#    Updated: 2018/10/02 12:12:55 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ endif
 ## Sources directories
 #
 TEST_DIRS	:= tests
-SRC_DIRS	:= utils nm otool opt
+SRC_DIRS	:= common nm otool opt
 #
 
 ## Colors
