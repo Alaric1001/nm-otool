@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/28 18:36:52 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/01 15:21:51 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ static void	realloc_symbols(const t_symbol* new_symbols, t_array *symbols)
 	new_len = 0;
 	while (new_symbols[new_len].nlist)
 		++new_len;
-	symbols->begin = ft_realloc(symbols->begin, symbols->nelems,
-			symbols->nelems + new_len);
+	symbols->begin = ft_realloc(symbols->begin,
+			symbols->nelems	* sizeof(t_symbol),
+			(symbols->nelems + new_len) * sizeof(t_symbol));
 	symbols_ptr = (t_symbol*)symbols->begin;
 	ft_memcpy(symbols_ptr + symbols->nelems, new_symbols,
 			new_len * sizeof(t_symbol));

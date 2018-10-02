@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:09:52 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 15:59:41 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/01 12:58:42 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 size_t	get_struct_size(t_mach_struct stype, t_mtype mtype)
 {
 	static const size_t sizes[] = {sizeof(header_t), sizeof(header64_t),
-									sizeof(nlist_t), sizeof(nlist64_t),
-									sizeof(t_fat_arch), sizeof(t_fat_arch64)};
+								sizeof(nlist_t), sizeof(nlist64_t),
+								sizeof(t_fat_arch), sizeof(t_fat_arch64),
+								sizeof(t_segcommand), sizeof(t_segcommand64),
+								sizeof(t_msection), sizeof(t_msection64)};
 	return (sizes[stype + mtype % 2]);
 }

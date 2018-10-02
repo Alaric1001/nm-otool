@@ -6,13 +6,14 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 17:23:56 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 15:14:57 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 10:42:44 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 
 #include "libft/math/math.h"
+#include "libft/string/string.h"
 
 #define VALUE_MAX_LEN64 16
 #define VALUE_MAX_LEN32 8
@@ -41,8 +42,46 @@ void	add_value_to_obuff(uint64_t value, t_mtype mtype, t_obuff *obuff)
 		ft_add_uint_base_to_obuff(value, LIBFT_FMT_HEX, obuff);
 }
 
-void	add_type_to_obuff(const nlist_t *nlist, t_obuff *obuff)
+static char corresponding_char(const t_segment *segments, uint32_t index)
 {
-	(void)nlist;
-	ft_add_char_to_obuff('U', obuff);
+	const char		*name;
+	const t_section	*begin;
+
+	while (segments)
+	{
+		if (index <= segments->sections.nelems && segments->sections.nelems)
+		{
+			begin = (const t_section*)segments->sections.begin;
+			name = begin[index].name;
+			if (!ft_strcmp(SECT_TEXT, name))
+				return ('T');
+			if (!ft_strcmp(SECT_DATA, name))
+				return ('D');
+			if (!ft_strcmp(SECT_BSS, name))
+				return ('B');
+			if (!ft_strcmp(SECT_COMMON, name))
+				return ('C');
+			return ('S');
+		}
+		index -= segments->sections.nelems;
+		segments = segments->next;
+	}
+	return ('?');
+}
+
+void	add_type_to_obuff(const nlist_t *nlist, const t_segment *segments,
+			t_obuff *obuff)
+{
+	char type;
+
+	type = 'U';
+	if ((nlist->n_type & N_TYPE) == N_ABS)
+		type = 'A';
+	else if ((nlist->n_type & N_TYPE) == N_INDR)
+		type = 'I';
+	else if ((nlist->n_type & N_TYPE) == N_SECT)
+		type = corresponding_char(segments, nlist->n_sect - 1);
+	if (!(nlist->n_type & N_EXT))
+		type = ft_tolower(type);
+	ft_add_char_to_obuff(type, obuff);
 }

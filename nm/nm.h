@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/28 18:10:25 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/01 16:54:18 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "opt/opt.h"
 
 # include "libft/output/obuff.h"
-# include "libft/memory/memory.h"
 
 typedef struct 	s_symbol
 {
@@ -28,14 +27,14 @@ typedef struct 	s_symbol
 
 typedef struct	s_macho_data
 {
-	t_array	*symbols;
-	t_array *sections;
+	t_array		*symbols;
+	t_segment	*segments;
 }				t_macho_data;
 
 uint8_t	get_and_display_symbols(t_opt opt, const t_map *map);
 uint8_t	get_static_symbols(const symcommand_t *cmd, const t_map *map,
 			t_array *symbold);
 void	add_value_to_obuff(uint64_t value, t_mtype mtype, t_obuff *obuff);
-void	add_type_to_obuff(const nlist_t *nlist, t_obuff *obuff);
-
+void	add_type_to_obuff(const nlist_t *nlist, const t_segment* segments,
+			t_obuff *obuff);
 #endif

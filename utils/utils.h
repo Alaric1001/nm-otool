@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 16:22:12 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 10:32:20 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@ void		unmap_file(t_map *map, const t_file *file);
 t_mtype		get_file_type(const t_map *map);
 const void	*safe_access(const void* addr, size_t shift, size_t limit);
 size_t		get_struct_size(t_mach_struct stype, t_mtype mtype);
+uint8_t		get_sections(const t_segcommand *cmd, const t_map *map,
+				t_segment **segments);
+void 		display_sections(const t_segment *s);
 
 #endif

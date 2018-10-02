@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/28 18:45:03 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/01 17:59:05 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,24 @@
 
 static void		free_machodata(t_macho_data *mdata)
 {
-	while (--mdata->symbols->nelems)
-		free((t_symbol*)(mdata->symbols->begin)++);
+	t_segment *seg;
+
 	ft_memdel(&mdata->symbols->begin);
-	ft_memdel(&mdata->sections->begin);
+	while (mdata->segments)
+	{
+		free(mdata->segments->sections.begin);
+		seg = mdata->segments->next;
+		free(mdata->segments);
+		mdata->segments = seg;
+	}
 }
 
 static uint8_t	parse_command(const command_t *command, const t_map *map,
 		t_macho_data *mdata)
 {
-	if (command->cmd == LC_SEGMENT)
-		return (get_sections())
+	if (command->cmd == LC_SEGMENT || command->cmd == LC_SEGMENT_64)
+		return (get_sections((const t_segcommand*)command, map,
+					&mdata->segments));
 	if (command->cmd == LC_SYMTAB)
 		return (get_static_symbols((const symcommand_t*)command, map,
 			mdata->symbols));
@@ -60,7 +67,8 @@ static uint8_t	parse_macho(t_opt opt, const t_map *map, t_macho_data *mdata)
 	return (1);
 }
 
-static void		display_symbols(t_opt opt, const t_array *symbols, t_mtype mtype)
+static void		display_symbols(t_opt opt, const t_macho_data *data,
+					t_mtype mtype)
 {
 	size_t			i;
 	t_obuff			obuff;
@@ -69,15 +77,15 @@ static void		display_symbols(t_opt opt, const t_array *symbols, t_mtype mtype)
 	i = 0;
 	(void)opt;
 	obuff = (t_obuff){.cursor = 0, .fd = 1};
-	while (i < symbols->nelems)
+	while (i < data->symbols->nelems)
 	{
-		sym = (const t_symbol*)symbols->begin + i;
+		sym = (const t_symbol*)data->symbols->begin + i;
 		if (sym->name)
 		{
 
 			add_value_to_obuff(sym->value, mtype, &obuff);
 			ft_add_char_to_obuff(' ', &obuff);
-			add_type_to_obuff(sym->nlist, &obuff);
+			add_type_to_obuff(sym->nlist, data->segments, &obuff);
 			ft_add_char_to_obuff(' ', &obuff);
 			ft_add_str_to_obuff(sym->name, &obuff);
 			ft_add_char_to_obuff('\n', &obuff);
@@ -90,20 +98,18 @@ static void		display_symbols(t_opt opt, const t_array *symbols, t_mtype mtype)
 uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 {
 	t_array			symbols;
-	t_array			sections;
 	t_macho_data	mdata;
 
 	(void)opt;
 	symbols = (t_array){0, 0};
-	sections = (t_array){0, 0};
-	mdata = (t_macho_data){&symbols, &sections};
+	mdata = (t_macho_data){&symbols, NULL};
 	if (map->type == NONE)
 		return (0);
 //	if (map->type == ARCHIVE)
 //		return (display_arch_sym(opt, map));
 	if (!parse_macho(opt, map, &mdata))
 		return (0);
-	display_symbols(opt, &symbols, map->type);
+	display_symbols(opt, &mdata, map->type);
 	free_machodata(&mdata);
 	return (1);
 }
