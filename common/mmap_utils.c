@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mmap_common.c                                       :+:      :+:    :+:   */
+/*   mmap_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 17:46:37 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 18:23:48 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 17:45:10 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ uint8_t	map_file(const t_file *file, t_map *map)
 {
 	map->size = file->stats->st_size;
 	map->begin = mmap(NULL, map->size, PROT_READ, MAP_PRIVATE, file->fd, 0);
+	map->addr = map->begin;
 	if (map->addr == MAP_FAILED)
 	{
 		ft_file_error(file->name, "Error while mapping the file");
 		return (0);
 	}
-	map->addr = map->begin;
 	map->type = get_file_type(map);
 	if ((map->type == FAT || map->type == FAT64))
 	{

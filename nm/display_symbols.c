@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/01 17:59:05 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 17:40:21 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 #include "common/common.h"
 #include "libft/output/obuff.h"
 
+#include <stdio.h>
 static void		free_machodata(t_macho_data *mdata)
 {
-	t_segment *seg;
+	t_segment	*seg;
+	uint32_t	i;
 
+	i = 0;
+	while (i < mdata->symbols->nelems)
+		free(*((t_symbol**)mdata->symbols->begin + i++));
 	ft_memdel(&mdata->symbols->begin);
 	while (mdata->segments)
 	{
@@ -72,23 +77,24 @@ static void		display_symbols(t_opt opt, const t_macho_data *data,
 {
 	size_t			i;
 	t_obuff			obuff;
-	const t_symbol	*sym;
+	const t_symbol	**sym;
 
 	i = 0;
 	(void)opt;
 	obuff = (t_obuff){.cursor = 0, .fd = 1};
 	while (i < data->symbols->nelems)
 	{
-		sym = (const t_symbol*)data->symbols->begin + i;
-		if (sym->name)
+		sym = (const t_symbol**)data->symbols->begin + i;
+		if ((*sym)->name)
 		{
 
-			add_value_to_obuff(sym->value, mtype, &obuff);
+			add_value_to_obuff((*sym)->value, mtype, &obuff);
 			ft_add_char_to_obuff(' ', &obuff);
-			add_type_to_obuff(sym->nlist, data->segments, &obuff);
+			add_type_to_obuff((*sym)->nlist, data->segments, &obuff);
 			ft_add_char_to_obuff(' ', &obuff);
-			ft_add_str_to_obuff(sym->name, &obuff);
+			ft_add_str_to_obuff((*sym)->name, &obuff);
 			ft_add_char_to_obuff('\n', &obuff);
+			ft_flush_obuff(&obuff);
 		}
 		++i;
 	}

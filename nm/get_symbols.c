@@ -6,48 +6,49 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/01 15:21:51 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/02 17:42:48 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 #include "common/common.h"
 
-static void	add_symbol(t_symbol *symbols, const char* sym_tab,
+static void	add_symbol(t_symbol **symbols, const char* sym_tab,
 		const t_nlist *nlist, const t_map *map)
 {
 	const t_nlist64* nlist64;
 	
-	symbols->name = sym_tab + nlist->n_un.n_strx;
-	symbols->nlist = nlist;
+	*symbols = ft_memalloc(sizeof(t_symbol));
+	(*symbols)->name = sym_tab + nlist->n_un.n_strx;
+	(*symbols)->nlist = nlist;
 	if (map->type == MACHO64)
 	{
 		nlist64 = (const t_nlist64*)nlist;
-		symbols->value = nlist64->n_value;
+		(*symbols)->value = nlist64->n_value;
 	}
 	else
-		symbols->value = nlist->n_value;
+		(*symbols)->value = nlist->n_value;
 }
 
-static void	realloc_symbols(const t_symbol* new_symbols, t_array *symbols)
+static void	realloc_symbols(t_symbol *new_symbols[], t_array *symbols)
 {
 	size_t 		new_len;
-	t_symbol	*symbols_ptr;
+	t_symbol	**symbols_ptr;
 
 	new_len = 0;
-	while (new_symbols[new_len].nlist)
+	while (new_symbols[new_len])
 		++new_len;
 	symbols->begin = ft_realloc(symbols->begin,
-			symbols->nelems	* sizeof(t_symbol),
-			(symbols->nelems + new_len) * sizeof(t_symbol));
-	symbols_ptr = (t_symbol*)symbols->begin;
+			symbols->nelems * sizeof(t_symbol*),
+			(symbols->nelems + new_len) * sizeof(t_symbol*));
+	symbols_ptr = (t_symbol**)symbols->begin;
 	ft_memcpy(symbols_ptr + symbols->nelems, new_symbols,
-			new_len * sizeof(t_symbol));
+			new_len * sizeof(t_symbol*));
 	symbols->nelems += new_len;
 }
 
 static uint8_t	get_static_symbols_routine(const t_symcommand *cmd,
-		const t_map *map, t_symbol new_symbols[], const char *s_table)
+		const t_map *map, t_symbol *new_symbols[], const char *s_table)
 {
 	uint32_t		i;
 	int				symbol_i;
@@ -73,12 +74,12 @@ uint8_t		get_static_symbols(const t_symcommand *cmd, const t_map *map,
 						t_array *symbols)
 {
 	const char		*s_table;
-	t_symbol		new_symbols[cmd->nsyms + 1];
+	t_symbol		*new_symbols[cmd->nsyms + 1];
 
 	if (!(s_table = (const char*)safe_access(map->addr, cmd->stroff,
 					map->size)))
 		return (0);
-	ft_bzero(new_symbols, (cmd->nsyms + 1) * sizeof(t_symbol));
+	ft_bzero(new_symbols, (cmd->nsyms + 1) * sizeof(t_symbol*));
 	if (!get_static_symbols_routine(cmd, map, new_symbols, s_table))
 		return (0);
 	realloc_symbols(new_symbols, symbols);
