@@ -21,13 +21,13 @@ t_mtype	get_file_type(const t_map *map)
 {
 	static const long	identifiers[] = {MH_MAGIC, MH_MAGIC_64, FAT_CIGAM,
 		FAT_CIGAM_64};
-	const header_t		*head;
+	const t_header		*head;
 	int					i;
 
 	if (!ft_memcmp(map->addr, "<!arch>\n", 8))
 		return (ARCHIVE);
-	head = (header_t*)map->addr;
-	if (map->size <= sizeof(header_t))
+	head = (t_header*)map->addr;
+	if (map->size <= sizeof(t_header))
 		return (NONE);
 	i = -1;
 	while (identifiers[++i])

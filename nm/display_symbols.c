@@ -28,32 +28,32 @@ static void		free_machodata(t_macho_data *mdata)
 	}
 }
 
-static uint8_t	parse_command(const command_t *command, const t_map *map,
+static uint8_t	parse_command(const t_command *command, const t_map *map,
 		t_macho_data *mdata)
 {
 	if (command->cmd == LC_SEGMENT || command->cmd == LC_SEGMENT_64)
 		return (get_sections((const t_segcommand*)command, map,
 					&mdata->segments));
 	if (command->cmd == LC_SYMTAB)
-		return (get_static_symbols((const symcommand_t*)command, map,
+		return (get_static_symbols((const t_symcommand*)command, map,
 			mdata->symbols));
 	return (1);
 }
 
 static uint8_t	parse_macho(t_opt opt, const t_map *map, t_macho_data *mdata)
 {
-	const header64_t	*header;
-	const command_t		*command;
+	const t_header64	*header;
+	const t_command		*command;
 	size_t				shift;
 	uint32_t			i;
 
-	header = (const header64_t*)map->addr;
+	header = (const t_header64*)map->addr;
 	shift = get_struct_size(HEADER, map->type);
 	i = 0;
 	(void)opt;
 	while (i <= header->ncmds)
 	{
-		if (!(command = (const command_t*)safe_access(map->addr, shift,
+		if (!(command = (const t_command*)safe_access(map->addr, shift,
 					header->sizeofcmds + get_struct_size(HEADER, map->type))))
 			return (0);
 		if (!parse_command(command, map, mdata))

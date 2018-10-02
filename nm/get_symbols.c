@@ -14,15 +14,15 @@
 #include "utils/utils.h"
 
 static void	add_symbol(t_symbol *symbols, const char* sym_tab,
-		const nlist_t *nlist, const t_map *map)
+		const t_nlist *nlist, const t_map *map)
 {
-	const nlist64_t* nlist64;
+	const t_nlist64* nlist64;
 	
 	symbols->name = sym_tab + nlist->n_un.n_strx;
 	symbols->nlist = nlist;
 	if (map->type == MACHO64)
 	{
-		nlist64 = (const nlist64_t*)nlist;
+		nlist64 = (const t_nlist64*)nlist;
 		symbols->value = nlist64->n_value;
 	}
 	else
@@ -46,20 +46,20 @@ static void	realloc_symbols(const t_symbol* new_symbols, t_array *symbols)
 	symbols->nelems += new_len;
 }
 
-static uint8_t	get_static_symbols_routine(const symcommand_t *cmd,
+static uint8_t	get_static_symbols_routine(const t_symcommand *cmd,
 		const t_map *map, t_symbol new_symbols[], const char *s_table)
 {
 	uint32_t		i;
 	int				symbol_i;
 	size_t			shift;
-	const nlist_t	*nlist;
+	const t_nlist	*nlist;
 
 	shift = cmd->symoff;
 	i = 0;
 	symbol_i = 0;
 	while (i < cmd->nsyms)
 	{
-		if (!(nlist = (const nlist_t*)safe_access(map->addr, shift, map->size)))
+		if (!(nlist = (const t_nlist*)safe_access(map->addr, shift, map->size)))
 			return (0);
 		if (!(nlist->n_type & N_STAB))
 			add_symbol(&new_symbols[symbol_i++], s_table, nlist, map);
@@ -69,7 +69,7 @@ static uint8_t	get_static_symbols_routine(const symcommand_t *cmd,
 	return (1);
 }
 
-uint8_t		get_static_symbols(const symcommand_t *cmd, const t_map *map,
+uint8_t		get_static_symbols(const t_symcommand *cmd, const t_map *map,
 						t_array *symbols)
 {
 	const char		*s_table;

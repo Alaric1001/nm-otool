@@ -17,14 +17,14 @@
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
 
-typedef struct mach_header_64 header64_t;
-typedef struct mach_header header_t;
-typedef struct load_command command_t;
+typedef struct mach_header_64 t_header64;
+typedef struct mach_header t_header;
+typedef struct load_command t_command;
 typedef struct segment_command t_segcommand;
 typedef struct segment_command_64 t_segcommand64;
-typedef struct symtab_command symcommand_t;
-typedef struct nlist nlist_t;
-typedef struct nlist_64 nlist64_t;
+typedef struct symtab_command t_symcommand;
+typedef struct nlist t_nlist;
+typedef struct nlist_64 t_nlist64;
 typedef struct fat_header t_fat_header;
 typedef struct fat_arch t_fat_arch;
 typedef struct fat_arch_64 t_fat_arch64;

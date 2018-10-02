@@ -15,8 +15,8 @@
 
 size_t	get_struct_size(t_mach_struct stype, t_mtype mtype)
 {
-	static const size_t sizes[] = {sizeof(header_t), sizeof(header64_t),
-								sizeof(nlist_t), sizeof(nlist64_t),
+	static const size_t sizes[] = {sizeof(t_header), sizeof(t_header64),
+								sizeof(t_nlist), sizeof(t_nlist64),
 								sizeof(t_fat_arch), sizeof(t_fat_arch64),
 								sizeof(t_segcommand), sizeof(t_segcommand64),
 								sizeof(t_msection), sizeof(t_msection64)};

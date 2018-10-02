@@ -21,7 +21,7 @@
 typedef struct 	s_symbol
 {
 	const char		*name;
-	const nlist_t	*nlist;
+	const t_nlist	*nlist;
 	uint64_t 		value;
 }				t_symbol;
 
@@ -32,9 +32,9 @@ typedef struct	s_macho_data
 }				t_macho_data;
 
 uint8_t	get_and_display_symbols(t_opt opt, const t_map *map);
-uint8_t	get_static_symbols(const symcommand_t *cmd, const t_map *map,
+uint8_t	get_static_symbols(const t_symcommand *cmd, const t_map *map,
 			t_array *symbold);
 void	add_value_to_obuff(uint64_t value, t_mtype mtype, t_obuff *obuff);
-void	add_type_to_obuff(const nlist_t *nlist, const t_segment* segments,
+void	add_type_to_obuff(const t_nlist *nlist, const t_segment* segments,
 			t_obuff *obuff);
 #endif

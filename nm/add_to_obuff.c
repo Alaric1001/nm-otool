@@ -69,7 +69,7 @@ static char corresponding_char(const t_segment *segments, uint32_t index)
 	return ('?');
 }
 
-void	add_type_to_obuff(const nlist_t *nlist, const t_segment *segments,
+void	add_type_to_obuff(const t_nlist *nlist, const t_segment *segments,
 			t_obuff *obuff)
 {
 	char type;
