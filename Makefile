@@ -6,7 +6,7 @@
 #    By: asenat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 17:26:46 by asenat            #+#    #+#              #
-#    Updated: 2018/10/02 17:14:58 by asenat           ###   ########.fr        #
+#    Updated: 2018/10/03 11:24:41 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ $(LIBFT):
 ## Including tests
 #
 -include $(patsubst %, %/Rules.mk, $(TEST_DIRS))
+include DiffTest.mk
 #
 
 .PHONY: clean
