@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 17:23:56 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/02 10:42:44 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/03 13:32:03 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ static char corresponding_char(const t_segment *segments, uint32_t index)
 				return ('D');
 			if (!ft_strcmp(SECT_BSS, name))
 				return ('B');
-			if (!ft_strcmp(SECT_COMMON, name))
-				return ('C');
 			return ('S');
 		}
 		index -= segments->sections.nelems;

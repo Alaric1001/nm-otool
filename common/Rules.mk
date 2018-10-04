@@ -26,3 +26,5 @@ common/$(OBJECT_DIR)/mmap_utils.o: common/mmap_utils.c common/common.h \
   libft/output/output.h
 common/$(OBJECT_DIR)/safe_access.o: common/safe_access.c common/common.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h
+common/$(OBJECT_DIR)/split_fat.o: common/split_fat.c common/common.h \
+  common/data_structures.h common/typedefs.h libft/memory/memory.h

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 10:41:58 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 14:54:43 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/03 19:10:51 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 t_mtype	get_file_type(const t_map *map)
 {
 	static const long	identifiers[] = {MH_MAGIC, MH_MAGIC_64, FAT_CIGAM,
-		FAT_CIGAM_64};
+		FAT_CIGAM_64, 0};
 	const t_header		*head;
 	int					i;
 

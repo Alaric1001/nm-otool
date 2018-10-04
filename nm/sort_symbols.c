@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:25:38 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/02 18:55:07 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/03 14:05:36 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 
 static int		cmp(const t_symbol *a, const t_symbol *b)
 {
-	return (ft_strcmp(a->name, b->name));
+	int ret;
+
+	ret = ft_strcmp(a->name, b->name);
+	if (!ret)
+		return (a->value - b->value);
+	return (ret);
 }
 
 void			sort_symbols(t_array *symbols)

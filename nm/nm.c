@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/27 17:11:51 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/03 17:06:07 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,57 @@
 
 #include <stdio.h>
 
-static int nm(t_opt opt, const char *files[])
+static uint8_t nm_multi_map(t_opt opt, const t_array *maps, const t_file *file)
+{
+	const t_map 	*first_map;
+	uint32_t		i;
+
+	i = 0;
+	first_map = (const t_map*)maps->begin;
+	(void)file;
+	while (i < maps->nelems)
+	{
+		if (!get_and_display_symbols(opt, &first_map[i++]))
+		{
+			free(maps->begin);
+			return (1);
+		}
+	}
+	free(maps->begin);
+	return (0);
+}
+
+static uint8_t	nm(t_opt opt, const t_map *mapped_file, const t_file *file)
+{
+	t_array maps;
+
+	if (mapped_file->type == FAT || mapped_file->type == FAT64)
+	{
+		if (!(split_fat(mapped_file, &maps)))
+			return (1);
+		return (nm_multi_map(opt, &maps, file));
+	}
+	if (!get_and_display_symbols(opt, mapped_file))
+		return (1);
+	return (0);
+}
+
+static int open_map_and_nm(t_opt opt, const char *files[])
 {
 	int		ret;
 	t_file	file;
 	t_map	mapped_file;
 
 	ret = 0;
-	(void)opt;
 	while (*files)
 	{
 		if (open_file(*files, O_RDONLY, &file))
 		{
 			if (map_file(&file, &mapped_file))
 			{
-				printf("name:%s, fd:%d, size:%lld\n", file.name, file.fd, file.stats->st_size);
-				if (!get_and_display_symbols(opt, &mapped_file))
+				if ((ret = nm(opt, &mapped_file, &file)))
 					ft_putstr_fd(PARSE_ERR,	STDERR_FILENO);
+				//if (!get_and_display_symbols(opt, &mapped_file))
 				unmap_file(&mapped_file, &file);
 			}
 			close_file(&file);
@@ -60,9 +94,9 @@ int			main(int ac, const char *av[])
 	args = (t_args) {ac - 1, av + 1};
 	opt = parse_options(&args, &files);
 	if (has_option(opt, OPT_FILE))
-		ret = nm(opt, files);
+		ret = open_map_and_nm(opt, files);
 	else
-		ret = nm(opt, (const char*[]){"./a.out", 0});
+		ret = open_map_and_nm(opt, (const char*[]){"./a.out", 0});
 	free(files);
 	return (ret);
 }

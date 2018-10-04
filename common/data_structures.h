@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/01 13:00:01 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/03 17:36:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ typedef struct 	s_file
 
 typedef struct 	s_map
 {
-	size_t	size;
-	uint8_t	*addr;
-	void	*begin;
-	t_mtype	type;
+	size_t		size;
+	uint8_t		*addr;
+	t_mtype		type;
+	cpu_type_t	cpu_type;
 }				t_map;
 
 typedef struct	s_segments

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/02 12:17:15 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/03 17:06:27 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ size_t		get_struct_size(t_mach_struct stype, t_mtype mtype);
 uint8_t		get_sections(const t_segcommand *cmd, const t_map *map,
 				t_segment **segments);
 void 		display_sections(const t_segment *s);
+uint8_t		split_fat(const t_map *map, t_array *maps);
 
 #endif
