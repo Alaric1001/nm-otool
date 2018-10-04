@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/03 17:06:07 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/04 10:55:20 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static uint8_t	nm(t_opt opt, const t_map *mapped_file, const t_file *file)
 {
 	t_array maps;
 
-	if (mapped_file->type == FAT || mapped_file->type == FAT64)
+	if (mapped_file->type.mtype == FAT || mapped_file->type.mtype == FAT64)
 	{
 		if (!(split_fat(mapped_file, &maps)))
 			return (1);

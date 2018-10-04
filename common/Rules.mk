@@ -21,6 +21,8 @@ common/$(OBJECT_DIR)/get_sections.o: common/get_sections.c \
 common/$(OBJECT_DIR)/get_struct_size.o: common/get_struct_size.c \
   common/common.h common/data_structures.h common/typedefs.h \
   libft/memory/memory.h
+common/$(OBJECT_DIR)/get_utils.o: common/get_utils.c common/common.h \
+  common/data_structures.h common/typedefs.h libft/memory/memory.h
 common/$(OBJECT_DIR)/mmap_utils.o: common/mmap_utils.c common/common.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h \
   libft/output/output.h

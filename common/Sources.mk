@@ -5,6 +5,7 @@ OBJ_FILES_common := display_sections.o \
                     get_file_type.o \
                     get_sections.o \
                     get_struct_size.o \
+                    get_utils.o \
                     mmap_utils.o \
                     safe_access.o \
                     split_fat.o

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/03 17:36:16 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/04 10:49:20 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ typedef enum	e_mach_struct
 	SECTION = 8,
 }				t_mach_struct;
 
+typedef enum	e_endianness
+{
+	LITTLE,
+	BIG,
+}				t_endianness;
+
+typedef struct	s_type
+{
+	t_mtype			mtype;
+	t_endianness 	endian;
+}				t_type;
+
 typedef struct 	s_file
 {
 	const char 	*name;
@@ -52,7 +64,7 @@ typedef struct 	s_map
 {
 	size_t		size;
 	uint8_t		*addr;
-	t_mtype		type;
+	t_type		type;
 	cpu_type_t	cpu_type;
 }				t_map;
 

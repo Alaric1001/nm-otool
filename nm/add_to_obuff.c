@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 17:23:56 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/03 13:32:03 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/04 16:29:31 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char corresponding_char(const t_segment *segments, uint32_t index)
 
 	while (segments)
 	{
-		if (index <= segments->sections.nelems && segments->sections.nelems)
+		if (index < segments->sections.nelems && segments->sections.nelems)
 		{
 			begin = (const t_section*)segments->sections.begin;
 			name = begin[index].name;
