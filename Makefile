@@ -6,7 +6,7 @@
 #    By: asenat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 17:26:46 by asenat            #+#    #+#              #
-#    Updated: 2018/10/03 11:24:41 by asenat           ###   ########.fr        #
+#    Updated: 2018/10/04 17:45:45 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,3 +96,9 @@ fclean: clean
 
 .PHONY: re
 re: fclean all
+
+.PHONY: makedeps
+makedeps:
+	python3.7 libft/gen_make_sources.py -e nm nm
+	python3.7 libft/gen_make_sources.py -e otool otool
+	python3.7 libft/gen_make_sources.py common opt
