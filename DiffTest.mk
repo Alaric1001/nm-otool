@@ -12,8 +12,11 @@ test_all: test_bin test_libs
 .PHONY: test_bin
 test_bin: all $(FAIL_DIR) $(BINS)
 
-.PHONY: $(BINS)
-$(BINS):
+.PHONY: test_libs
+test_libs: all $(FAIL_DIR) $(LIBS)
+
+.PHONY: $(BINS) $(LIBS)
+$(BINS) $(LIBS):
 	$(eval DIFF_R := $(shell ./DiffTest.sh "$@"; echo $$?))
 	@if [ $(DIFF_R) -gt 0 ]; \
 	then \
