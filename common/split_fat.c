@@ -6,14 +6,12 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 15:17:54 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 13:19:30 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/04 17:18:52 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common/common.h"
 #include "common/typedefs.h"
-
-#define GOOD_CPU 16777223
 
 //static void try_to_set_map(const t_map *ref, t_map *array, int *i)
 //{
@@ -58,9 +56,9 @@
 
 static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 {
-	const t_fat_arch64 *arch64;
-	uint64_t offset;
-	uint64_t size;
+	const t_fat_arch64	*arch64;
+	uint64_t 			offset;
+	uint64_t 			size;
 
 	if (origin->type.mtype == FAT64)
 	{
@@ -75,12 +73,13 @@ static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 		return (0);
 	map->size = size;
 	map->type = get_file_type(map);
+	map->cpu_type = get_uint32(arch->cputype, origin->type.endian);
 	return (1);
 }
 
 static int check_cpu(const t_fat_arch *arch, const t_map *map, t_array *maps)
 {
-	if (arch->cputype == get_int32(GOOD_CPU, map->type.endian))
+	if (arch->cputype == get_int32(CURRENT_CPU, map->type.endian))
 	{
 		if (!(get_fat(arch, map, (t_map*)(maps->begin))))
 			return (-1);

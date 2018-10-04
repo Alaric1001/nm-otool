@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 15:09:06 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/04 17:39:01 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,5 @@ void	add_type_to_obuff(const t_nlist *nlist, const t_segment* segments,
 			t_obuff *obuff);
 void	add_name_to_obuff(const char *name, t_endianness e, t_obuff *obuff);
 void	sort_symbols(t_array *symbols);
+void	display_title(const char *fname, cpu_type_t cputype);
 #endif

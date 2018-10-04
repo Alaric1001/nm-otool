@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 10:55:20 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/04 17:34:58 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ static uint8_t nm_multi_map(t_opt opt, const t_array *maps, const t_file *file)
 
 	i = 0;
 	first_map = (const t_map*)maps->begin;
-	(void)file;
 	while (i < maps->nelems)
 	{
+		if (maps->nelems > 1 || first_map[i].cpu_type != CURRENT_CPU)
+			display_title(file->name, first_map[i].cpu_type);
 		if (!get_and_display_symbols(opt, &first_map[i++]))
 		{
 			free(maps->begin);
