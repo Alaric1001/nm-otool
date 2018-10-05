@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 16:29:38 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/05 10:36:59 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static void		display_symbols(t_opt opt, const t_macho_data *data,
 		if ((*sym)->name)
 		{
 
-			add_value_to_obuff((*sym)->value, type.mtype, &obuff);
+			add_value_to_obuff((*sym)->value, type.mtype,
+					(*sym)->nlist, &obuff);
 			ft_add_char_to_obuff(' ', &obuff);
 			add_type_to_obuff((*sym)->nlist, data->segments, &obuff);
 			ft_add_char_to_obuff(' ', &obuff);

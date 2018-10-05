@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 17:23:56 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 16:29:31 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/05 10:57:24 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@
 #define VALUE_MAX_LEN64 16
 #define VALUE_MAX_LEN32 8
 
-void	add_value_to_obuff(uint64_t value, t_mtype mtype, t_obuff *obuff)
+void	add_value_to_obuff(uint64_t value, t_mtype mtype,
+		const t_nlist *nlist, t_obuff *obuff)
 {
 	size_t	value_len;
 	char	c;
 	int		padding;
 
 	value_len = ft_get_u_nb_len(value, 16);
-	if (value)
+	if ((nlist->n_type & N_TYPE) != N_UNDF)
 	{
-		++value_len;
+		if (value)
+			++value_len;
 		c = '0';
 	}
 	else
