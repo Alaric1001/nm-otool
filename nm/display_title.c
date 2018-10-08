@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 17:35:36 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 18:07:29 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/08 16:23:29 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,25 @@ static void add_cpu_type(cpu_type_t cputype, t_obuff *obuff)
 	ft_add_str_to_obuff(names[i], obuff);
 }
 
-void	display_title(const char *fname, cpu_type_t cputype)
+void	display_title(const char *fname, const t_map_metadata *metadata,
+		uint8_t disp_dat)
 {
 	t_obuff			obuff;
 
-	(void)cputype;
 	obuff = (t_obuff){.cursor = 0, .fd = 1};
+	if (disp_dat & DISPLAY_MULT)
+		ft_add_char_to_obuff('\n', &obuff);
 	ft_add_str_to_obuff(fname, &obuff);
-	if (cputype != CPU_TYPE_X86 && cputype != CPU_TYPE_X86_64)
+	if (metadata->name)
+	{
+		ft_add_char_to_obuff('(', &obuff);
+		ft_add_str_to_obuff(metadata->name, &obuff);
+		ft_add_char_to_obuff(')', &obuff);
+	}
+	if (disp_dat & DISPLAY_CPU && disp_dat & DISPLAY_MULT)
 	{
 		ft_add_str_to_obuff(" (for architecture ", &obuff);
-		add_cpu_type(cputype, &obuff);
+		add_cpu_type(metadata->cpu, &obuff);
 		ft_add_char_to_obuff(')', &obuff);
 	}
 	ft_add_str_to_obuff(":\n", &obuff);

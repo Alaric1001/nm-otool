@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:15:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/01 12:00:17 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/05 13:52:30 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ typedef struct fat_arch t_fat_arch;
 typedef struct fat_arch_64 t_fat_arch64;
 typedef struct section t_msection;
 typedef struct section_64 t_msection64;
+typedef struct ranlib t_ranlib;
+typedef struct ar_hdr t_ar_head;
 
 #endif

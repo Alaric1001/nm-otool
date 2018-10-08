@@ -6,53 +6,12 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 15:17:54 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 17:18:52 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/08 13:50:23 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common/common.h"
 #include "common/typedefs.h"
-
-//static void try_to_set_map(const t_map *ref, t_map *array, int *i)
-//{
-//	int j;
-//
-//	j = 0;
-//	while (j < *i)
-//	{
-//		if (array[j].cpu_type == ref->cpu_type)
-//		{
-//			if (ref->type > array[j].type)
-//				ft_memcpy(&array[j], &ref, sizeof(t_map));
-//			else
-//				*i++;
-//			return;
-//		}
-//	}
-//}
-//
-//static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *array, int *i)
-//{
-//	const t_fat_arch64 *arch64;
-//	t_map tmp;
-//	uint64_t offset;
-//
-//	tmp.cpu_type = OSSwapInt32(arch->cputype);
-//	if (map->type == FAT64)
-//	{
-//		arch64 = (const t_fat_arch64*)arch;
-//		offset = OSSwapInt64(arch64->offset);
-//		tmp.size = OSSwapInt64(arch64->size);
-//	}
-//	else
-//		offset = OSSwapInt32(arch->offset);
-//		tmp.size = OSSwapInt32(arch->size);
-//	if (!(tmp.addr = (void*)safe_access(origin->addr, offset, origin->size)))
-//		return (0);
-//	tmp.type = get_file_type(&tmp);
-//	try_to_set_map(&tmp, array, i);
-//	return (1);
-//}
 
 static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 {
@@ -73,7 +32,7 @@ static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 		return (0);
 	map->size = size;
 	map->type = get_file_type(map);
-	map->cpu_type = get_uint32(arch->cputype, origin->type.endian);
+	map->metadata.cpu = get_uint32(arch->cputype, origin->type.endian);
 	return (1);
 }
 

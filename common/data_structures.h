@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 10:49:20 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/08 13:47:31 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,18 @@ typedef struct 	s_file
 	struct stat	*stats;
 }				t_file;
 
+typedef struct	s_map_metadata
+{
+	cpu_type_t	cpu;
+	const char	*name;
+}				t_map_metadata;
+
 typedef struct 	s_map
 {
-	size_t		size;
-	uint8_t		*addr;
-	t_type		type;
-	cpu_type_t	cpu_type;
+	size_t			size;
+	uint8_t			*addr;
+	t_type			type;
+	t_map_metadata	metadata;
 }				t_map;
 
 typedef struct	s_segments
@@ -81,5 +87,12 @@ typedef struct s_section
 	uint64_t	size;
 	uint64_t	offset;
 }				t_section;
+
+typedef struct	s_ar_header
+{
+	const struct ar_hdr	*head;
+	const char			*name;
+	size_t				size;
+}				t_ar_header;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 17:35:59 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/05 14:37:32 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ uint8_t		get_sections(const t_segcommand *cmd, const t_map *map,
 				t_segment **segments);
 void 		display_sections(const t_segment *s);
 uint8_t		split_fat(const t_map *map, t_array *maps);
+uint8_t		split_arch(const t_map *map, t_array *maps);
 
 uint32_t 	get_uint32(uint32_t i, t_endianness e);
 uint64_t 	get_uint64(uint64_t i, t_endianness e);

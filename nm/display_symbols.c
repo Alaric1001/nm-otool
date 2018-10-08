@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/05 10:36:59 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/05 12:28:54 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 	mdata = (t_macho_data){&symbols, NULL};
 	if (map->type.mtype == NONE)
 		return (0);
-//	if (map->type == ARCHIVE)
-//		return (display_arch_sym(opt, map));
 	if (!parse_macho(opt, map, &mdata))
 		return (0);
 	sort_symbols(&symbols);

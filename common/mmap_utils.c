@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 17:46:37 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/03 16:12:48 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/08 14:51:50 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ uint8_t	map_file(const t_file *file, t_map *map)
 		ft_file_error(file->name, "Error while mapping the file");
 		return (0);
 	}
+	ft_bzero(&map->metadata, sizeof(map->metadata));
 	map->type = get_file_type(map);
 	return (1);
 }

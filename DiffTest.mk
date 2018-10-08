@@ -4,7 +4,7 @@ BIN_DIR		:= /bin /usr/bin
 LIB_DIR		:= /usr/lib
 
 BINS		:= $(shell find $(BIN_DIR) -type f)
-LIBS		:= $(shell find $(LIB_DIR) -type f \( -iname '*.dylib' -or -iname '*.so' \))
+LIBS		:= $(shell find $(LIB_DIR) -type f \( -iname '*.dylib' -or -iname '*.so' -or -iname '*.a' \))
 
 .PHONY: test_all
 test_all: test_bin test_libs

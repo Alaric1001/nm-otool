@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 10:41:58 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 13:11:49 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/05 14:58:33 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "libft/memory/memory.h"
 
 #include <mach-o/fat.h>
+#include <ar.h>
 
 t_type	get_file_type(const t_map *map)
 {
@@ -24,7 +25,7 @@ t_type	get_file_type(const t_map *map)
 	const t_header		*head;
 	int					i;
 
-	if (!ft_memcmp(map->addr, "<!arch>\n", 8))
+	if (!ft_memcmp(map->addr, ARMAG, SARMAG))
 		return ((t_type){ARCHIVE, LITTLE});
 	head = (t_header*)map->addr;
 	if (map->size <= sizeof(t_header))

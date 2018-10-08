@@ -8,6 +8,7 @@ OBJ_FILES_common := display_sections.o \
                     get_utils.o \
                     mmap_utils.o \
                     safe_access.o \
+                    split_arch.o \
                     split_fat.o
 
 OBJECTS += $(patsubst %, common/$(OBJECT_DIR)/%, $(OBJ_FILES_common))
