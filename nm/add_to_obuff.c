@@ -26,7 +26,7 @@ void	add_value_to_obuff(uint64_t value, t_mtype mtype,
 	int		padding;
 
 	value_len = ft_get_u_nb_len(value, 16);
-	if ((nlist->n_type & N_TYPE) != N_UNDF)
+	if ((nlist->n_type & N_TYPE) != N_UNDF || value)
 	{
 		if (value)
 			++value_len;
@@ -69,19 +69,21 @@ static char corresponding_char(const t_segment *segments, uint32_t index)
 	return ('?');
 }
 
-void	add_type_to_obuff(const t_nlist *nlist, const t_segment *segments,
+void	add_type_to_obuff(const t_symbol *symbol, const t_segment *segments,
 			t_obuff *obuff)
 {
 	char type;
 
 	type = 'U';
-	if ((nlist->n_type & N_TYPE) == N_ABS)
+	if (symbol->value)
+		type = 'C';
+	if ((symbol->nlist->n_type & N_TYPE) == N_ABS)
 		type = 'A';
-	else if ((nlist->n_type & N_TYPE) == N_INDR)
+	else if ((symbol->nlist->n_type & N_TYPE) == N_INDR)
 		type = 'I';
-	else if ((nlist->n_type & N_TYPE) == N_SECT)
-		type = corresponding_char(segments, nlist->n_sect - 1);
-	if (!(nlist->n_type & N_EXT))
+	else if ((symbol->nlist->n_type & N_TYPE) == N_SECT)
+		type = corresponding_char(segments, symbol->nlist->n_sect - 1);
+	if (!(symbol->nlist->n_type & N_EXT))
 		type = ft_tolower(type);
 	ft_add_char_to_obuff(type, obuff);
 }
