@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 12:41:41 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/08 16:48:30 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/09 13:30:10 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 #include "common/typedefs.h"
 
 #include "libft/string/string.h"
+#include "libft/lists/lists.h"
 
 #include <ar.h>
 #include <mach-o/ranlib.h>
 
+static void		free_lst(void* content, size_t size)
+{
+	free(content);
+	(void)size;
+}
+
 static uint8_t  get_head(const t_map *map, uint32_t offset, t_ar_header *h)
 {
-
 	if (!(h->head = (const struct ar_hdr*)safe_access(map->addr, offset,
 			map->size)))
 		return (0);
@@ -34,55 +40,13 @@ static uint8_t  get_head(const t_map *map, uint32_t offset, t_ar_header *h)
 			return (0);
 		h->size += ft_atoi(h->head->ar_name + 3);
 	}
-	return (1);
+	h->file_size = ft_atoi(h->head->ar_size);
+	return (h->file_size > 0);
 }
 
-static const t_ranlib *get_ranlib(const t_map *map, uint32_t *ranlibsize)
+static uint8_t	put_mach_header(const t_ar_header *hd, const t_map *orig, t_map *dst)
 {
-	size_t 				symdeflen;
-	t_ar_header			hdr;
-
-	if (!get_head(map, SARMAG, &hdr))
-		return (NULL);
-	symdeflen = ft_strlen(hdr.name);
-	if (ft_strncmp(hdr.name, SYMDEF, 9) &&
-			ft_strncmp(hdr.name, SYMDEF_SORTED, 16))
-		return (NULL);
-	if (!safe_access(hdr.head, hdr.size,
-				map->size - SARMAG - hdr.size))
-		return (NULL);
-	else
-		*ranlibsize = *(uint32_t*)((const char*)hdr.head + hdr.size);
-	return (safe_access(hdr.head, hdr.size + sizeof(uint32_t),
-				map->size - SARMAG - hdr.size));
-}
-
-static void alloc_and_sort_ranlibs(const t_ranlib *raw,
-		uint32_t ranlibsize, t_array *arr)
-{
-	const t_ranlib *last;
-	uint32_t		i;
-
-	arr->begin = ft_memalloc(ranlibsize * sizeof(t_ranlib*));
-	last = NULL;
-	i = 0;
-	arr->nelems = 0;
-	ranlibsize /= sizeof(t_ranlib);
-	while (i < ranlibsize)
-	{
-		if (!last || (last && last->ran_off != raw[i].ran_off))
-			((t_ranlib*)arr->begin)[arr->nelems++] = raw[i];
-		last = &raw[i++];
-	}
-
-	//TODO Sort with offsets
-}
-
-static uint8_t	put_mach_header(const t_ar_header *hd, const t_ranlib *rlib, 
-		const t_map *orig, t_map *dst)
-{
-	if (!(dst->addr = (void*)safe_access(orig->addr, rlib->ran_off + hd->size,
-					orig->size))) 
+	if (!(dst->addr = (void*)safe_access(hd->head, hd->size, orig->size))) 
 		return (0);
 	dst->size = ft_atoi(hd->head->ar_size);
 	dst->metadata.name = hd->name;
@@ -91,31 +55,49 @@ static uint8_t	put_mach_header(const t_ar_header *hd, const t_ranlib *rlib,
 	return (1);
 }
 
-#include <stdio.h>
+t_list	*get_headers(const t_map *map)
+{
+	t_list	*ret;
+	t_ar_header hd;
+	uint32_t total;
+
+	if (!get_head(map, SARMAG, &hd))
+		return (NULL);
+	if (ft_strncmp(hd.name, SYMDEF, 9) &&
+			ft_strncmp(hd.name, SYMDEF_SORTED, 16))
+		return (NULL);
+	ret = NULL;
+	total = SARMAG + sizeof(*hd.head) + hd.file_size;
+	while (total < map->size && get_head(map, total, &hd))
+	{
+		ft_lstadd_back(&ret, &hd, sizeof(t_ar_header));
+		total += sizeof(*hd.head) + hd.file_size;
+	}
+	return (ret);
+}
 
 uint8_t	split_arch(const t_map *map, t_array *maps)
 {
-	uint32_t		ranlibsize;
-	const t_ranlib	*ranlibs;
-	uint32_t		i;
-	t_ar_header		hdr;
-	t_array			arr;
+	t_list				*headers;
+	const t_list		*cursor;
+	uint32_t			len;
+	const t_ar_header	*hdr;
+	uint32_t			i;
 
-	if (!(ranlibs = get_ranlib(map, &ranlibsize)))
+	if (!(headers = get_headers(map)))
 		return (0);
+	len = ft_lstlen(headers);
+	maps->begin = ft_memalloc(len * sizeof(t_map));
+	maps->nelems = len;
+	cursor = headers;
 	i = 0;
-	alloc_and_sort_ranlibs(ranlibs, ranlibsize, &arr);
-	maps->begin = ft_memalloc(arr.nelems * sizeof(t_map));
-	maps->nelems = arr.nelems;
-	while (i < arr.nelems)
+	while (cursor)
 	{
-		ranlibs = &((const t_ranlib*)arr.begin)[i];
-		if (!get_head(map, ranlibs->ran_off, &hdr))
+		hdr = (const t_ar_header*)cursor->content;
+		if (!put_mach_header(hdr, map, &((t_map*)maps->begin)[i++]))
 			break ;
-		if (!put_mach_header(&hdr, ranlibs, map,
-					&((t_map*)maps->begin)[i++]))
-			break ;
+		cursor = cursor->next;
 	}
-	free(arr.begin);
-	return (i == arr.nelems);
+	ft_lstdel(&headers, free_lst);
+	return (i == len);
 }

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/08 13:47:31 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/09 10:36:53 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct	s_ar_header
 	const struct ar_hdr	*head;
 	const char			*name;
 	size_t				size;
+	size_t				file_size;
 }				t_ar_header;
 
 #endif

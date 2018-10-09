@@ -30,7 +30,8 @@ common/$(OBJECT_DIR)/safe_access.o: common/safe_access.c common/common.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h
 common/$(OBJECT_DIR)/split_arch.o: common/split_arch.c common/common.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h \
-  libft/string/string.h
+  libft/string/string.h libft/lists/lists.h
 libft/string/string.h:
+libft/lists/lists.h:
 common/$(OBJECT_DIR)/split_fat.o: common/split_fat.c common/common.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h

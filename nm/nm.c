@@ -21,23 +21,39 @@
 
 #include <stdio.h>
 
+static uint8_t	has_different_cpus(const t_array *maps)
+{
+	const t_map 	*first_map;
+	uint32_t		i;
+	cpu_type_t		last_cpu;
+
+	first_map = (const t_map*)maps->begin;
+	last_cpu = first_map->metadata.cpu;
+	i = 1;
+	while (i < maps->nelems)
+	{
+		if (first_map[i].metadata.cpu != last_cpu)
+			return (1);
+		last_cpu = first_map[i++].metadata.cpu;
+	}
+	return (0);
+}
+
 uint8_t sub_nm(t_opt opt, const t_array *maps, const t_file *file,
 		uint8_t write_title)
 {
 	const t_map 	*first_map;
 	uint32_t		i;
-	//uint8_t			title;
 
 	first_map = (const t_map*)maps->begin;
 	i = 0;
-	//title = write_title && maps->nelems <= 1;
-	if (maps->nelems > 1)
-	{
+	if (!(write_title & DISPLAY_MULT) && maps->nelems > 1)
 		write_title += DISPLAY_MULT;
-	}
 	if (!(write_title & DISPLAY) &&
 			(maps->nelems > 1 || first_map[0].metadata.cpu != CURRENT_CPU))
 		write_title += DISPLAY;
+	if (has_different_cpus(maps))
+		write_title += DISPLAY_CPU;
 	while (i < maps->nelems)
 	{
 		if (nm(opt, &first_map[i++], file, write_title))
@@ -59,13 +75,13 @@ uint8_t	nm(t_opt opt, const t_map *map, const t_file *file,
 	{
 		if (!split_fat(map, &maps))
 			return (1);
-		return (sub_nm(opt, &maps, file, write_title + DISPLAY_CPU));
+		return (sub_nm(opt, &maps, file, write_title));
 	}
 	if (map->type.mtype == ARCHIVE)
 	{
 		if (!split_arch(map, &maps))
 			return (1);
-		return (sub_nm(opt, &maps, file, write_title + DISPLAY_ARCH));
+		return (sub_nm(opt, &maps, file, write_title + DISPLAY_MULT));
 	}
 	if (write_title & DISPLAY)
 		display_title(file->name, &map->metadata, write_title);
