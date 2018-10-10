@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 18:10:06 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 18:58:34 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int				main(int ac, const char *av[])
 	if (has_option(opt, OPT_FILE))
 		ret = open_map_and_nm(opt, files, files[0] && files[1] ? 1 : 0);
 	else
-		ret = open_map_and_nm(opt, (const char*[]){"./a.out"}, 0);
+		ret = open_map_and_nm(opt, (const char*[]){"./a.out", 0}, 0);
 	free(files);
 	return (ret);
 }
