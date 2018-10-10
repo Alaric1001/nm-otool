@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm_options.c                                       :+:      :+:    :+:   */
+/*   otool_opt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/10 17:20:29 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 18:20:37 by asenat           ###   ########.fr       */
+/*   Created: 2018/10/10 18:18:40 by asenat            #+#    #+#             */
+/*   Updated: 2018/10/10 18:22:58 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm/nm.h"
+#include "otool/otool.h"
 
 #include "libft/string/string.h"
 #include "libft/output/output.h"
-#include <unistd.h>
 
 static void	unknown_cmd(const char *cmd)
 {
@@ -23,14 +22,14 @@ static void	unknown_cmd(const char *cmd)
 		ft_putstr_fd("'.\n", STDERR_FILENO);
 }
 
-t_opt		nm_opt_parser(t_opt curr_opt, const char *arg)
+t_opt		otool_opt_parser(t_opt curr_opt, const char *arg)
 {
 	t_opt ret;
 
 	ret = 0;
 	(void)curr_opt;
-	if (!ft_strcmp(arg, "-r"))
-		ret += OPT_REVERSE;
+	if (!ft_strcmp(arg, "-t"))
+		ret += OPT_TEXT;
 	else if (arg[0] == '-')
 	{
 		unknown_cmd(arg);
