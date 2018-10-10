@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/09 14:15:05 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 13:17:40 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 	t_macho_data	mdata;
 
 	(void)opt;
-	symbols = (t_array){0, 0};
+	symbols = (t_array){0, sizeof(t_symbol*), NULL};
 	mdata = (t_macho_data){&symbols, NULL};
 	if (map->type.mtype == NONE)
 		return (0);
