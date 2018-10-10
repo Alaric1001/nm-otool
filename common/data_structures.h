@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/09 10:36:53 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:30:57 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ typedef enum	e_endianness
 typedef struct	s_type
 {
 	t_mtype			mtype;
-	t_endianness 	endian;
+	t_endianness	endian;
 }				t_type;
 
-typedef struct 	s_file
+typedef struct	s_file
 {
-	const char 	*name;
+	const char	*name;
 	int			fd;
 	struct stat	*stats;
 }				t_file;
@@ -66,7 +66,7 @@ typedef struct	s_map_metadata
 	const char	*name;
 }				t_map_metadata;
 
-typedef struct 	s_map
+typedef struct	s_map
 {
 	size_t			size;
 	uint8_t			*addr;
@@ -81,7 +81,7 @@ typedef struct	s_segments
 	struct s_segments	*next;
 }				t_segment;
 
-typedef struct s_section
+typedef struct	s_section
 {
 	char		name[16];
 	uint64_t	size;

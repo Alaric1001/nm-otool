@@ -6,19 +6,18 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:47:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/02 17:47:41 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:40:08 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common/common.h"
 
-#include "libft/memory/memory.h"
 #include "libft/output/output.h"
 
 #include <fcntl.h>
 #include <unistd.h>
 
-uint8_t			open_file(const char* filename, int oflags, t_file *file)
+uint8_t		open_file(const char *filename, int oflags, t_file *file)
 {
 	if ((file->fd = open(filename, oflags)) == -1)
 	{
@@ -42,7 +41,7 @@ uint8_t			open_file(const char* filename, int oflags, t_file *file)
 	return (1);
 }
 
-void		close_file(t_file* file)
+void		close_file(t_file *file)
 {
 	free(file->stats);
 	if (close(file->fd) == -1)

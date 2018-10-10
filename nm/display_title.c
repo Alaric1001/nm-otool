@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 17:35:36 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/08 16:23:29 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 15:33:22 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <mach/machine.h>
 
-static void add_cpu_type(cpu_type_t cputype, t_obuff *obuff)
+static void		add_cpu_type(cpu_type_t cputype, t_obuff *obuff)
 {
 	static const cpu_type_t types[] = {CPU_TYPE_MC680x0, CPU_TYPE_I386,
 		CPU_TYPE_MC98000, CPU_TYPE_HPPA, CPU_TYPE_ARM, CPU_TYPE_ARM64,
@@ -28,14 +28,14 @@ static void add_cpu_type(cpu_type_t cputype, t_obuff *obuff)
 	while (types[i])
 	{
 		if (types[i] == cputype)
-			break;
+			break ;
 		++i;
 	}
 	ft_add_str_to_obuff(names[i], obuff);
 }
 
-void	display_title(const char *fname, const t_map_metadata *metadata,
-		uint8_t disp_dat)
+void			display_title(const char *fname, const t_map_metadata *metadata,
+					uint8_t disp_dat)
 {
 	t_obuff			obuff;
 

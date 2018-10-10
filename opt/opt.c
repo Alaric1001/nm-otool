@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:43:31 by asenat            #+#    #+#             */
-/*   Updated: 2018/09/24 16:53:05 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 15:41:44 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <stdlib.h>
 
-static t_opt	get_files(int ac, const char * const av[],
+static t_opt	get_files(int ac, const char *const av[],
 		const char **files[])
 {
 	t_opt	ret;
@@ -60,7 +60,7 @@ t_opt			parse_options(const t_args *args, const char **files[])
 	return (ret);
 }
 
-uint8_t		has_option(t_opt opt, uint32_t option)
+uint8_t			has_option(t_opt opt, uint32_t option)
 {
 	return (opt & option);
 }

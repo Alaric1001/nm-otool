@@ -6,18 +6,18 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 15:17:54 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/08 13:50:23 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:55:07 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common/common.h"
 #include "common/typedefs.h"
 
-static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
+static uint8_t	get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 {
 	const t_fat_arch64	*arch64;
-	uint64_t 			offset;
-	uint64_t 			size;
+	uint64_t			offset;
+	uint64_t			size;
 
 	if (origin->type.mtype == FAT64)
 	{
@@ -27,7 +27,7 @@ static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 	}
 	else
 		offset = get_uint32(arch->offset, origin->type.endian);
-		size = get_uint32(arch->size, origin->type.endian);
+	size = get_uint32(arch->size, origin->type.endian);
 	if (!(map->addr = (void*)safe_access(origin->addr, offset, origin->size)))
 		return (0);
 	map->size = size;
@@ -36,7 +36,8 @@ static uint8_t get_fat(const t_fat_arch *arch, const t_map *origin, t_map *map)
 	return (1);
 }
 
-static int check_cpu(const t_fat_arch *arch, const t_map *map, t_array *maps)
+static int		check_cpu(const t_fat_arch *arch, const t_map *map,
+					t_array *maps)
 {
 	if (arch->cputype == get_int32(CURRENT_CPU, map->type.endian))
 	{
@@ -48,13 +49,13 @@ static int check_cpu(const t_fat_arch *arch, const t_map *map, t_array *maps)
 	return (0);
 }
 
-static uint32_t get_narch(const t_map *map)
+static uint32_t	get_narch(const t_map *map)
 {
 	return (get_uint32(((const t_fat_header*)map->addr)->nfat_arch,
 				map->type.endian));
 }
 
-uint8_t		split_fat(const t_map *map, t_array *maps)
+uint8_t			split_fat(const t_map *map, t_array *maps)
 {
 	uint32_t			nfat_arch;
 	size_t				shift;

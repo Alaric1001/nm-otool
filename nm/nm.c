@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/09 14:32:15 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 15:30:24 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 static uint8_t	has_different_cpus(const t_array *maps)
 {
-	const t_map 	*first_map;
+	const t_map		*first_map;
 	uint32_t		i;
 	cpu_type_t		last_cpu;
 
@@ -39,10 +39,10 @@ static uint8_t	has_different_cpus(const t_array *maps)
 	return (0);
 }
 
-uint8_t sub_nm(t_opt opt, const t_array *maps, const t_file *file,
+uint8_t			sub_nm(t_opt opt, const t_array *maps, const t_file *file,
 		uint8_t write_title)
 {
-	const t_map 	*first_map;
+	const t_map		*first_map;
 	uint32_t		i;
 
 	first_map = (const t_map*)maps->begin;
@@ -66,8 +66,8 @@ uint8_t sub_nm(t_opt opt, const t_array *maps, const t_file *file,
 	return (0);
 }
 
-uint8_t	nm(t_opt opt, const t_map *map, const t_file *file,
-		uint8_t write_title)
+uint8_t			nm(t_opt opt, const t_map *map, const t_file *file,
+					uint8_t write_title)
 {
 	t_array maps;
 
@@ -90,7 +90,8 @@ uint8_t	nm(t_opt opt, const t_map *map, const t_file *file,
 	return (0);
 }
 
-static int open_map_and_nm(t_opt opt, const char *files[], int has_multiple_files)
+static int		open_map_and_nm(t_opt opt, const char *files[],
+						int has_multiple_files)
 {
 	int		ret;
 	t_file	file;
@@ -104,7 +105,7 @@ static int open_map_and_nm(t_opt opt, const char *files[], int has_multiple_file
 			if (map_file(&file, &mapped_file))
 			{
 				if ((ret = nm(opt, &mapped_file, &file, has_multiple_files)))
-					ft_putstr_fd(PARSE_ERR,	STDERR_FILENO);
+					ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
 				unmap_file(&mapped_file, &file);
 			}
 			close_file(&file);
@@ -116,7 +117,7 @@ static int open_map_and_nm(t_opt opt, const char *files[], int has_multiple_file
 	return (ret);
 }
 
-int			main(int ac, const char *av[])
+int				main(int ac, const char *av[])
 {
 	int			ret;
 	const char	**files;

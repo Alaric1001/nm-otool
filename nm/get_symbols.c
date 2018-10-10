@@ -6,18 +6,18 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 14:57:04 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 15:25:42 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 #include "common/common.h"
 
-static void	add_symbol(t_symbol **symbols, const char* sym_tab,
+static void		add_symbol(t_symbol **symbols, const char *sym_tab,
 		const t_nlist *nlist, const t_map *map)
 {
-	const t_nlist64* nlist64;
-	
+	const t_nlist64 *nlist64;
+
 	*symbols = ft_memalloc(sizeof(t_symbol));
 	(*symbols)->name = sym_tab + get_uint32(nlist->n_un.n_strx,
 			map->type.endian);
@@ -31,9 +31,9 @@ static void	add_symbol(t_symbol **symbols, const char* sym_tab,
 		(*symbols)->value = get_uint32(nlist->n_value, map->type.endian);
 }
 
-static void	realloc_symbols(t_symbol *new_symbols[], t_array *symbols)
+static void		realloc_symbols(t_symbol *new_symbols[], t_array *symbols)
 {
-	size_t 		new_len;
+	size_t		new_len;
 	t_symbol	**symbols_ptr;
 
 	new_len = 0;
@@ -71,7 +71,7 @@ static uint8_t	get_static_symbols_routine(const t_symcommand *cmd,
 	return (1);
 }
 
-uint8_t		get_static_symbols(const t_symcommand *cmd, const t_map *map,
+uint8_t			get_static_symbols(const t_symcommand *cmd, const t_map *map,
 						t_array *symbols)
 {
 	const char		*s_table;

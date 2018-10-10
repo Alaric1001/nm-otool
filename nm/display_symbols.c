@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 13:17:40 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 15:10:10 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,21 @@ static void		free_machodata(t_macho_data *mdata)
 }
 
 static uint8_t	parse_command(const t_command *command, const t_map *map,
-		t_macho_data *mdata)
+					t_macho_data *mdata)
 {
 	uint32_t command_id;
 
 	command_id = get_uint32(command->cmd, map->type.endian);
 	if (command_id == LC_SEGMENT || command_id == LC_SEGMENT_64)
-		return (get_sections((const t_segcommand*)command, map,
-					&mdata->segments));
+	{
+		return (get_sections((const t_segcommand*)command,
+					map, &mdata->segments));
+	}
 	if (command_id == LC_SYMTAB)
-		return (get_static_symbols((const t_symcommand*)command, map,
-			mdata->symbols));
+	{
+		return (get_static_symbols((const t_symcommand*)command,
+					map, mdata->symbols));
+	}
 	return (1);
 }
 

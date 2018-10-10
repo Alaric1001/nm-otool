@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/01 11:03:09 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/04 15:07:48 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:48:56 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static uint32_t		get_nsects(const t_segcommand *cmd, const t_map *map)
 	return (cmd->nsects);
 }
 
-static void 		get_size_and_offset(const t_msection *sec,
+static void			get_size_and_offset(const t_msection *sec,
 			const t_map *map, uint64_t *size, uint64_t *offset)
 {
 	const t_msection64 *sec64;
@@ -65,13 +65,13 @@ uint8_t				get_sections(const t_segcommand *cmd, const t_map *map,
 	t_section			*section;
 	t_segment			*last;
 	uint32_t			i;
-		
+
 	last = malloc_last_segment(segments);
 	nsects = get_uint32(get_nsects(cmd, map), map->type.endian);
 	ft_memcpy(last->name, cmd->segname, 16);
 	last->sections.nelems = nsects;
 	last->sections.begin = ft_memalloc(sizeof(t_section) * nsects);
-	if (!(msection = (const t_msection*)safe_access(cmd, 
+	if (!(msection = (const t_msection*)safe_access(cmd,
 			get_struct_size(SEGMENT_CMD, map->type.mtype), map->size)))
 		return (0);
 	i = 0;
@@ -82,7 +82,7 @@ uint8_t				get_sections(const t_segcommand *cmd, const t_map *map,
 		get_size_and_offset(msection, map, &section->size, &section->offset);
 		if (!(msection = (const t_msection*)safe_access(msection,
 			get_struct_size(SECTION, map->type.mtype), map->size)))
-				return (0);
+			return (0);
 	}
 	return (1);
 }

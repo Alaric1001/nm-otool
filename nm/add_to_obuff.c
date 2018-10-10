@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 17:23:56 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/05 10:57:24 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:59:12 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #define VALUE_MAX_LEN64 16
 #define VALUE_MAX_LEN32 8
 
-void	add_value_to_obuff(uint64_t value, t_mtype mtype,
-		const t_nlist *nlist, t_obuff *obuff)
+void		add_value_to_obuff(uint64_t value, t_mtype mtype,
+				const t_nlist *nlist, t_obuff *obuff)
 {
 	size_t	value_len;
 	char	c;
@@ -39,12 +39,12 @@ void	add_value_to_obuff(uint64_t value, t_mtype mtype,
 	else
 		padding = VALUE_MAX_LEN32 - value_len;
 	while (padding-- > 0)
- 		ft_add_char_to_obuff(c, obuff);
+		ft_add_char_to_obuff(c, obuff);
 	if (value)
 		ft_add_uint_base_to_obuff(value, LIBFT_FMT_HEX, obuff);
 }
 
-static char corresponding_char(const t_segment *segments, uint32_t index)
+static char	corresponding_char(const t_segment *segments, uint32_t index)
 {
 	const char		*name;
 	const t_section	*begin;
@@ -69,8 +69,8 @@ static char corresponding_char(const t_segment *segments, uint32_t index)
 	return ('?');
 }
 
-void	add_type_to_obuff(const t_symbol *symbol, const t_segment *segments,
-			t_obuff *obuff)
+void		add_type_to_obuff(const t_symbol *symbol, const t_segment *segments,
+				t_obuff *obuff)
 {
 	char type;
 

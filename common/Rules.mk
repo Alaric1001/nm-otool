@@ -1,16 +1,13 @@
 ## Auto generated make tool, don't edit manually.
 common/$(OBJECT_DIR)/%.o: common/%.c
 	$(COMP) $@ $<
-common/$(OBJECT_DIR)/display_sections.o: common/display_sections.c \
-  common/common.h common/data_structures.h common/typedefs.h \
-  libft/memory/memory.h
+common/$(OBJECT_DIR)/file_utils.o: common/file_utils.c common/common.h \
+  common/data_structures.h common/typedefs.h libft/memory/memory.h \
+  libft/output/output.h
 common/common.h:
 common/data_structures.h:
 common/typedefs.h:
 libft/memory/memory.h:
-common/$(OBJECT_DIR)/file_utils.o: common/file_utils.c common/common.h \
-  common/data_structures.h common/typedefs.h libft/memory/memory.h \
-  libft/output/output.h
 libft/output/output.h:
 common/$(OBJECT_DIR)/get_file_type.o: common/get_file_type.c \
   common/common.h common/data_structures.h common/typedefs.h \

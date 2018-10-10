@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/05 12:41:41 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/09 13:30:10 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:36:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 #include <ar.h>
 #include <mach-o/ranlib.h>
 
-static void		free_lst(void* content, size_t size)
+static void		free_lst(void *content, size_t size)
 {
 	free(content);
 	(void)size;
 }
 
-static uint8_t  get_head(const t_map *map, uint32_t offset, t_ar_header *h)
+static uint8_t	get_head(const t_map *map, uint32_t offset, t_ar_header *h)
 {
 	if (!(h->head = (const struct ar_hdr*)safe_access(map->addr, offset,
 			map->size)))
@@ -44,9 +44,10 @@ static uint8_t  get_head(const t_map *map, uint32_t offset, t_ar_header *h)
 	return (h->file_size > 0);
 }
 
-static uint8_t	put_mach_header(const t_ar_header *hd, const t_map *orig, t_map *dst)
+static uint8_t	put_mach_header(const t_ar_header *hd, const t_map *orig,
+					t_map *dst)
 {
-	if (!(dst->addr = (void*)safe_access(hd->head, hd->size, orig->size))) 
+	if (!(dst->addr = (void*)safe_access(hd->head, hd->size, orig->size)))
 		return (0);
 	dst->size = ft_atoi(hd->head->ar_size);
 	dst->metadata.name = hd->name;
@@ -55,11 +56,11 @@ static uint8_t	put_mach_header(const t_ar_header *hd, const t_map *orig, t_map *
 	return (1);
 }
 
-t_list	*get_headers(const t_map *map)
+t_list			*get_headers(const t_map *map)
 {
-	t_list	*ret;
-	t_ar_header hd;
-	uint32_t total;
+	t_list		*ret;
+	t_ar_header	hd;
+	uint32_t	total;
 
 	if (!get_head(map, SARMAG, &hd))
 		return (NULL);
@@ -76,7 +77,7 @@ t_list	*get_headers(const t_map *map)
 	return (ret);
 }
 
-uint8_t	split_arch(const t_map *map, t_array *maps)
+uint8_t			split_arch(const t_map *map, t_array *maps)
 {
 	t_list				*headers;
 	const t_list		*cursor;

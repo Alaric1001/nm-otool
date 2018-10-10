@@ -6,13 +6,13 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 15:08:39 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/03 16:16:40 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 14:49:27 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common/common.h"
 
-const void	*safe_access(const void* addr, size_t shift, size_t limit)
+const void	*safe_access(const void *addr, size_t shift, size_t limit)
 {
 	if (shift > limit)
 		return (NULL);
