@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opt.h                                              :+:      :+:    :+:   */
+/*   nm_options.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/20 17:28:29 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 15:43:11 by asenat           ###   ########.fr       */
+/*   Created: 2018/10/10 17:20:29 by asenat            #+#    #+#             */
+/*   Updated: 2018/10/10 17:26:49 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OPT_H
-# define OPT_H
+#include "nm/nm.h"
 
-# include <stdint.h>
+#include "opt/opt.h"
+#include "libft/string/string.h"
 
-# define OPT_ERR	0x0
-# define OPT_FILE	0x1
-
-typedef struct		s_args
+t_opt	nm_opt_parser(t_opt curr_opt, const char *arg)
 {
-	uint32_t	count;
-	const char	**args;
-}					t_args;
+	t_opt ret;
 
-typedef uint32_t	t_opt;
-
-t_opt				parse_options(const t_args *args, const char **files[],
-						t_opt (*opt_parser)(t_opt opt, const char *arg));
-uint8_t				has_option(t_opt opt, uint32_t option);
-
-#endif
+	ret = 0;
+	(void)curr_opt;
+	if (!ft_strcmp(arg, "-r"))
+		ret += OPT_REVERSE;
+	return (ret);
+}

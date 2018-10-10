@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 15:30:24 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 17:27:04 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int				main(int ac, const char *av[])
 
 	files = NULL;
 	args = (t_args) {ac - 1, av + 1};
-	opt = parse_options(&args, &files);
+	opt = parse_options(&args, &files, nm_opt_parser);
 	if (has_option(opt, OPT_FILE))
 		ret = open_map_and_nm(opt, files, files[0] && files[1] ? 1 : 0);
 	else

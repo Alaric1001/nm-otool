@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 15:37:38 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 17:29:53 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void			add_type_to_obuff(const t_symbol *symbol,
 					const t_segment *segments, t_obuff *obuff);
 void			add_name_to_obuff(const char *name, t_endianness e,
 					t_obuff *obuff);
-void			sort_symbols(t_array *symbols);
+void			sort_symbols(t_opt opt, t_array *symbols);
 void			display_title(const char *fname, const t_map_metadata *cputype,
 					uint8_t disp_dat);
 
@@ -53,4 +53,8 @@ uint8_t			nm(t_opt opt, const t_map *map, const t_file *file,
 					uint8_t write_title);
 uint8_t			sub_nm(t_opt opt, const t_array *maps, const t_file *file,
 					uint8_t write_title);
+
+# define OPT_REVERSE 0x2
+
+t_opt			nm_opt_parser(t_opt curr_opt, const char *arg);
 #endif
