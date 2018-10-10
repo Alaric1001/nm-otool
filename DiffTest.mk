@@ -1,9 +1,9 @@
 FAIL_DIR	:= fails
 DIFF		:= diff
-BIN_DIR		:= /bin /usr/bin
+BIN_DIR		:= /bin /usr/bin /usr/sbin /usr/libexec
 LIB_DIR		:= /usr/lib
 
-BINS		:= $(shell find $(BIN_DIR) -type f)
+BINS		:= $(shell find $(BIN_DIR) -type f 2>&-)
 LIBS		:= $(shell find $(LIB_DIR) -type f \( -iname '*.dylib' -or -iname '*.so' -or -iname '*.a' \))
 
 .PHONY: test_all
