@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 17:20:29 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 17:26:49 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 18:14:06 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,17 @@
 
 #include "opt/opt.h"
 #include "libft/string/string.h"
+#include "libft/output/output.h"
+#include <unistd.h>
 
-t_opt	nm_opt_parser(t_opt curr_opt, const char *arg)
+static void	unknown_cmd(const char *cmd)
+{
+		ft_putstr_fd("Unknown command line argument '", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd("'.\n", STDERR_FILENO);
+}
+
+t_opt		nm_opt_parser(t_opt curr_opt, const char *arg)
 {
 	t_opt ret;
 
@@ -23,5 +32,10 @@ t_opt	nm_opt_parser(t_opt curr_opt, const char *arg)
 	(void)curr_opt;
 	if (!ft_strcmp(arg, "-r"))
 		ret += OPT_REVERSE;
+	else if (arg[0] == '-')
+	{
+		unknown_cmd(arg);
+		return (-1);
+	}
 	return (ret);
 }

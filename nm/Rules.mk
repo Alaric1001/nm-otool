@@ -28,7 +28,8 @@ nm/$(OBJECT_DIR)/nm.o: nm/nm.c nm/nm.h common/data_structures.h \
 libft/output/output.h:
 nm/$(OBJECT_DIR)/nm_options.o: nm/nm_options.c nm/nm.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h \
-  opt/opt.h libft/output/obuff.h libft/string/string.h
+  opt/opt.h libft/output/obuff.h libft/string/string.h \
+  libft/output/output.h
 nm/$(OBJECT_DIR)/sort_symbols.o: nm/sort_symbols.c nm/nm.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h \
   opt/opt.h libft/output/obuff.h libft/string/string.h libft/math/math.h

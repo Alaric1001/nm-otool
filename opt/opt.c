@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:43:31 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 17:48:06 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/10 18:07:34 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ t_opt			parse_options(const t_args *args, const char **files[],
 	{
 		if (!ft_strcmp(args->args[i], "--"))
 			break ;
-		ret += opt_parser(ret, args->args[i++]);
+		if ((ret += opt_parser(ret, args->args[i++])) == (t_opt)-1)
+			return (OPT_ERR);
 	}
 	ret += get_files(args->count, args->args, files);
 	return (ret);
