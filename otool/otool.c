@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:51 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 13:55:18 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 18:25:10 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,26 @@ uint8_t			sub_otool(t_opt opt, const t_array *maps, const t_file *file,
 }
 
 uint8_t	otool(t_opt opt, const t_map *map, const t_file *file,
-					int write_title)
+					int title_bytecode)
 {
 	t_array maps;
 
 	if (map->type.mtype == FAT || map->type.mtype == FAT64)
 	{
 		if (split_fat(map, &maps))
-			return (sub_otool(opt, &maps, file, write_title));
+			return (sub_otool(opt, &maps, file, title_bytecode));
 		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
 		return (1);
 	}
 	if (map->type.mtype == ARCHIVE)
 	{
 		if (!split_arch(map, &maps))
-			return (sub_otool(opt, &maps, file, write_title + DISPLAY_MULT));
+			return (sub_otool(opt, &maps, file,
+						title_bytecode + DISPLAY_MULT));
 		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
 		return (1);
 	}
-	if (write_title & DISPLAY)
-		display_title(file->name, &map->metadata, write_title);
-	if (!otool_execute(opt, map))
+	if (!otool_execute(opt, map, title_bytecode, file->name))
 		return (1);
 	return (0);
 }
@@ -97,6 +96,11 @@ static uint8_t	open_map_and_otool(t_opt opt, const char *files[],
 	return (ret);
 }
 
+static uint8_t has_valid_options(t_opt opt)
+{
+	return (has_option(opt, OPT_TEXT) || has_option(opt, OPT_TEXT));
+}
+
 int main(int ac, const char *av[]) {
 	const char	**files;
 	t_args		args;
@@ -112,5 +116,11 @@ int main(int ac, const char *av[]) {
 		ft_putstr_fd("No file specified.\n", STDERR_FILENO);
 		return (1);
 	}
-	return (open_map_and_otool(opt, files, files[0] && files[1] ? 1 : 0));
+	if (!has_valid_options(opt))
+	{
+		ft_putstr_fd("Usage: ./ft_otool -td [File...]\n", 2);
+		return (1);
+	}
+	return (open_map_and_otool(opt, files,
+				files[0] && files[1] ? 1 + DISPLAY_MULT : 1));
 }

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:19:10 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 14:48:51 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 18:23:26 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ uint8_t		sub_otool(t_opt opt, const t_array *maps, const t_file *file,
 				uint8_t write_title);
 uint8_t		display_section(const t_map *map, const t_macho_data *data,
 				const char *sect);
-uint8_t		otool_execute(t_opt opt, const t_map *map);
+uint8_t		otool_execute(t_opt opt, const t_map *map,
+		uint8_t title_data, const char *file_name);
 
 #endif

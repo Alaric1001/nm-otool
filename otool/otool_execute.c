@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 12:54:40 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 15:55:33 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 18:38:20 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@ static uint8_t parse_command(const t_command *command, const t_map *map,
 	return (1);
 }
 
-uint8_t		otool_execute(t_opt opt, const t_map *map)
+static void not_an_object(const char *fname)
+{
+	ft_putstr(fname);
+	ft_putstr(": is not an object file\n");
+}
+
+uint8_t		otool_execute(t_opt opt, const t_map *map,
+		uint8_t title_data, const char *file_name)
 {
 	t_macho_data	mdata;
 	uint8_t			ret;
@@ -42,18 +49,16 @@ uint8_t		otool_execute(t_opt opt, const t_map *map)
 	{
 		if (parse_macho(map, &mdata, parse_command))
 		{
+			display_title(file_name, &map->metadata, title_data);
 			if (has_option(opt, OPT_TEXT))
 				ret = display_section(map, &mdata, SECT_TEXT);
-			else if (has_option(opt, OPT_DATA))
+			if (has_option(opt, OPT_DATA))
 				ret = display_section(map, &mdata, SECT_DATA);
-			else
-				ft_putstr_fd("Usage: ./ft_otool -td [File...]\n", 2);
 			free_machodata(&mdata);
 			return (ret);
 		}
 	}
+	not_an_object(file_name);
 	free_machodata(&mdata);
-	ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
 	return (0);
-	
 }

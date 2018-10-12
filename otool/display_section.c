@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 14:09:44 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 15:43:41 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 17:42:32 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ static uint8_t	disp_section_routine(const t_map *map, const t_section *section, 
 			return (0);
 		add_uint_to_obuff(*tmp, sizeof(uint8_t), buff);
 		cursor += sizeof(uint8_t);
-		if ((line_state += (sizeof(uint8_t) * 8) / 4) >= 32)
+		if ((line_state += (sizeof(uint8_t) * 8) / 4) >= 32 &&
+				cursor < section->offset + section->size)
 		{
 			ft_add_char_to_obuff('\n', buff);
 			add_addr_to_obuff(section->addr + cursor - section->offset, map->type.mtype, buff);
