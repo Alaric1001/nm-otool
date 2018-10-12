@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:19:10 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 18:22:01 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 14:48:51 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,19 @@
 # define OTOOL_H
 
 # include "opt/opt.h"
+# include "common/common.h"
+
+# include "libft/memory/memory.h"
 
 # define OPT_TEXT 0x2
+# define OPT_DATA 0x4
 t_opt		otool_opt_parser(t_opt curr_opt, const char *arg);
+uint8_t		otool(t_opt opt, const t_map *map, const t_file *file,
+					int write_title);
+uint8_t		sub_otool(t_opt opt, const t_array *maps, const t_file *file,
+				uint8_t write_title);
+uint8_t		display_section(const t_map *map, const t_macho_data *data,
+				const char *sect);
+uint8_t		otool_execute(t_opt opt, const t_map *map);
 
 #endif

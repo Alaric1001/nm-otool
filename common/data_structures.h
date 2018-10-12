@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 14:30:57 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 11:10:17 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,33 @@ typedef struct	s_segments
 {
 	t_array				sections;
 	char				name[16];
+	uint64_t			vmaddr;
+	uint64_t			vmsize;
+	uint64_t			foffset;
+	uint64_t			fsize;
 	struct s_segments	*next;
 }				t_segment;
 
 typedef struct	s_section
 {
 	char		name[16];
+	uint64_t	addr;
 	uint64_t	size;
 	uint64_t	offset;
 }				t_section;
 
+typedef struct	s_symbol
+{
+	const char		*name;
+	const t_nlist	*nlist;
+	uint64_t		value;
+}				t_symbol;
+
+typedef struct	s_macho_data
+{
+	t_array		*symbols;
+	t_segment	*segments;
+}				t_macho_data;
 typedef struct	s_ar_header
 {
 	const struct ar_hdr	*head;

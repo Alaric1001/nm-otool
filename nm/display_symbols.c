@@ -6,31 +6,13 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 17:30:07 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/11 13:35:30 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 #include "common/common.h"
 #include "libft/output/obuff.h"
-
-static void		free_machodata(t_macho_data *mdata)
-{
-	t_segment	*seg;
-	uint32_t	i;
-
-	i = 0;
-	while (i < mdata->symbols->nelems)
-		free(*((t_symbol**)mdata->symbols->begin + i++));
-	ft_memdel(&mdata->symbols->begin);
-	while (mdata->segments)
-	{
-		free(mdata->segments->sections.begin);
-		seg = mdata->segments->next;
-		free(mdata->segments);
-		mdata->segments = seg;
-	}
-}
 
 static uint8_t	parse_command(const t_command *command, const t_map *map,
 					t_macho_data *mdata)
@@ -47,34 +29,6 @@ static uint8_t	parse_command(const t_command *command, const t_map *map,
 	{
 		return (get_static_symbols((const t_symcommand*)command,
 					map, mdata->symbols));
-	}
-	return (1);
-}
-
-static uint8_t	parse_macho(t_opt opt, const t_map *map, t_macho_data *mdata)
-{
-	const t_header64	*header;
-	const t_command		*command;
-	size_t				shift;
-	uint32_t			i;
-
-	header = (const t_header64*)map->addr;
-	shift = get_struct_size(HEADER, map->type.mtype);
-	i = 0;
-	(void)opt;
-	while (i <= get_uint32(header->ncmds, map->type.endian))
-	{
-		if (!(command = (const t_command*)safe_access(map->addr, shift,
-			get_uint32(header->sizeofcmds, map->type.endian)
-			+ get_struct_size(HEADER, map->type.mtype))))
-			return (0);
-		if (!parse_command(command, map, mdata))
-		{
-			free_machodata(mdata);
-			return (0);
-		}
-		shift += get_uint32(command->cmdsize, map->type.endian);
-		++i;
 	}
 	return (1);
 }
@@ -117,7 +71,7 @@ uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 	mdata = (t_macho_data){&symbols, NULL};
 	if (map->type.mtype == NONE)
 		return (0);
-	if (!parse_macho(opt, map, &mdata))
+	if (!parse_macho(map, &mdata, parse_command))
 		return (0);
 	sort_symbols(opt, &symbols);
 	display_symbols(opt, &mdata, map->type);

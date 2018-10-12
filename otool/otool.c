@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:51 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 18:45:14 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 13:55:18 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,86 @@
 #include "libft/output/output.h"
 
 #include <unistd.h>
+#include <fcntl.h>
+
+uint8_t			sub_otool(t_opt opt, const t_array *maps, const t_file *file,
+		uint8_t write_title)
+{
+	const t_map		*first_map;
+	uint32_t		i;
+
+	first_map = (const t_map*)maps->begin;
+	i = 0;
+	if (!(write_title & DISPLAY_MULT) && maps->nelems > 1)
+		write_title += DISPLAY_MULT;
+	if (!(write_title & DISPLAY) &&
+			(maps->nelems > 1 || first_map[0].metadata.cpu != CURRENT_CPU))
+		write_title += DISPLAY;
+	if (has_different_cpus(maps))
+		write_title += DISPLAY_CPU;
+	while (i < maps->nelems)
+	{
+		if (otool(opt, &first_map[i++], file, write_title))
+		{
+			free(maps->begin);
+			return (1);
+		}
+	}
+	free(maps->begin);
+	return (0);
+}
+
+uint8_t	otool(t_opt opt, const t_map *map, const t_file *file,
+					int write_title)
+{
+	t_array maps;
+
+	if (map->type.mtype == FAT || map->type.mtype == FAT64)
+	{
+		if (split_fat(map, &maps))
+			return (sub_otool(opt, &maps, file, write_title));
+		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
+		return (1);
+	}
+	if (map->type.mtype == ARCHIVE)
+	{
+		if (!split_arch(map, &maps))
+			return (sub_otool(opt, &maps, file, write_title + DISPLAY_MULT));
+		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
+		return (1);
+	}
+	if (write_title & DISPLAY)
+		display_title(file->name, &map->metadata, write_title);
+	if (!otool_execute(opt, map))
+		return (1);
+	return (0);
+}
+
+static uint8_t	open_map_and_otool(t_opt opt, const char *files[],
+						int has_multiple_files)
+{
+	int		ret;
+	t_file	file;
+	t_map	mapped_file;
+
+	ret = 0;
+	while (*files)
+	{
+		if (open_file(*files, O_RDONLY, &file))
+		{
+			if (map_file(&file, &mapped_file))
+			{
+				ret = otool(opt, &mapped_file, &file, has_multiple_files);
+				unmap_file(&mapped_file, &file);
+			}
+			close_file(&file);
+		}
+		else
+			ret = 1;
+		++files;
+	}
+	return (ret);
+}
 
 int main(int ac, const char *av[]) {
 	const char	**files;
@@ -27,15 +107,10 @@ int main(int ac, const char *av[]) {
 	opt = parse_options(&args, &files, otool_opt_parser);
 	if (opt == OPT_ERR)
 		return (1);
-	if (!has_option(opt, OPT_TEXT))
-	{
-		ft_putstr_fd("No options specified.\n", STDERR_FILENO);
-		return (1);
-	}
 	if (!has_option(opt, OPT_FILE))
 	{
 		ft_putstr_fd("No file specified.\n", STDERR_FILENO);
 		return (1);
 	}
-	return (0);
+	return (open_map_and_otool(opt, files, files[0] && files[1] ? 1 : 0));
 }

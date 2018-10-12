@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:48 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 18:58:34 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/11 11:03:41 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,6 @@
 #include <unistd.h>
 
 #include <stdio.h>
-
-static uint8_t	has_different_cpus(const t_array *maps)
-{
-	const t_map		*first_map;
-	uint32_t		i;
-	cpu_type_t		last_cpu;
-
-	first_map = (const t_map*)maps->begin;
-	last_cpu = first_map->metadata.cpu;
-	i = 1;
-	while (i < maps->nelems)
-	{
-		if (first_map[i].metadata.cpu != last_cpu)
-			return (1);
-		last_cpu = first_map[i++].metadata.cpu;
-	}
-	return (0);
-}
 
 uint8_t			sub_nm(t_opt opt, const t_array *maps, const t_file *file,
 		uint8_t write_title)

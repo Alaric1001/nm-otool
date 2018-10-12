@@ -6,11 +6,13 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 17:35:36 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 15:33:22 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 13:47:00 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm/nm.h"
+#include "common/common.h"
+
+#include "libft/output/obuff.h"
 
 #include <mach/machine.h>
 

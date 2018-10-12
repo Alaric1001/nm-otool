@@ -16,9 +16,6 @@ nm/$(OBJECT_DIR)/display_symbols.o: nm/display_symbols.c nm/nm.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h \
   opt/opt.h libft/output/obuff.h common/common.h
 common/common.h:
-nm/$(OBJECT_DIR)/display_title.o: nm/display_title.c nm/nm.h \
-  common/data_structures.h common/typedefs.h libft/memory/memory.h \
-  opt/opt.h libft/output/obuff.h
 nm/$(OBJECT_DIR)/get_symbols.o: nm/get_symbols.c nm/nm.h \
   common/data_structures.h common/typedefs.h libft/memory/memory.h \
   opt/opt.h libft/output/obuff.h common/common.h

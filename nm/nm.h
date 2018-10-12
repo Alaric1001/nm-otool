@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 17:29:53 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/12 13:48:44 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,6 @@
 
 # include "libft/output/obuff.h"
 
-# define DISPLAY 0x1
-# define DISPLAY_CPU 0x2
-# define DISPLAY_ARCH 0x4
-# define DISPLAY_MULT 0x8
-
-typedef struct	s_symbol
-{
-	const char		*name;
-	const t_nlist	*nlist;
-	uint64_t		value;
-}				t_symbol;
-
-typedef struct	s_macho_data
-{
-	t_array		*symbols;
-	t_segment	*segments;
-}				t_macho_data;
-
 uint8_t			get_and_display_symbols(t_opt opt, const t_map *map);
 uint8_t			get_static_symbols(const t_symcommand *cmd,
 					const t_map *map, t_array *symbold);
@@ -46,8 +28,6 @@ void			add_type_to_obuff(const t_symbol *symbol,
 void			add_name_to_obuff(const char *name, t_endianness e,
 					t_obuff *obuff);
 void			sort_symbols(t_opt opt, t_array *symbols);
-void			display_title(const char *fname, const t_map_metadata *cputype,
-					uint8_t disp_dat);
 
 uint8_t			nm(t_opt opt, const t_map *map, const t_file *file,
 					uint8_t write_title);
