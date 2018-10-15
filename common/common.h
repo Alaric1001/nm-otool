@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 13:48:54 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/15 13:11:38 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int32_t		get_int32(int32_t i, t_endianness e);
 typedef uint8_t (*t_cmd_actions)(const t_command *, const t_map*,
 					t_macho_data*);
 uint8_t		parse_macho(const t_map *map, t_macho_data *mdata,
-			t_cmd_actions actions);
+				t_cmd_actions actions);
 void		free_machodata(t_macho_data *mdata);
 #endif

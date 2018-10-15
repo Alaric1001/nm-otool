@@ -1,6 +1,7 @@
 ## Auto generated make tool, don't edit manually.
 
-OBJ_FILES_otool := display_section.o \
+OBJ_FILES_otool := add_to_obuff.o \
+                   display_section.o \
                    otool.o \
                    otool_execute.o \
                    otool_opt.o

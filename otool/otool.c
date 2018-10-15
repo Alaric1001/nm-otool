@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:51 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 18:25:10 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/15 14:50:50 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ uint8_t	otool(t_opt opt, const t_map *map, const t_file *file,
 	}
 	if (map->type.mtype == ARCHIVE)
 	{
-		if (!split_arch(map, &maps))
+		if (split_arch(map, &maps))
+		{
+			ft_putstr("Archive : ");
+			ft_putendl(file->name);
 			return (sub_otool(opt, &maps, file,
-						title_bytecode + DISPLAY_MULT));
+						title_bytecode));
+		}
 		ft_putstr_fd(PARSE_ERR, STDERR_FILENO);
 		return (1);
 	}

@@ -6,21 +6,22 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 15:25:42 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/15 15:51:14 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 #include "common/common.h"
 
-static void		add_symbol(t_symbol **symbols, const char *sym_tab,
+static uint8_t		add_symbol(t_symbol **symbols, const char *sym_tab,
 		const t_nlist *nlist, const t_map *map)
 {
 	const t_nlist64 *nlist64;
 
 	*symbols = ft_memalloc(sizeof(t_symbol));
-	(*symbols)->name = sym_tab + get_uint32(nlist->n_un.n_strx,
-			map->type.endian);
+	if (!((*symbols)->name = safe_access(sym_tab, get_uint32(nlist->n_un.n_strx,
+			map->type.endian), map->size)))
+		return (0);
 	(*symbols)->nlist = nlist;
 	if (map->type.mtype == MACHO64)
 	{
@@ -29,6 +30,7 @@ static void		add_symbol(t_symbol **symbols, const char *sym_tab,
 	}
 	else
 		(*symbols)->value = get_uint32(nlist->n_value, map->type.endian);
+	return (1);
 }
 
 static void		realloc_symbols(t_symbol *new_symbols[], t_array *symbols)
@@ -64,7 +66,8 @@ static uint8_t	get_static_symbols_routine(const t_symcommand *cmd,
 		if (!(nlist = (const t_nlist*)safe_access(map->addr, shift, map->size)))
 			return (0);
 		if (!(nlist->n_type & N_STAB))
-			add_symbol(&new_symbols[symbol_i++], s_table, nlist, map);
+			if (!add_symbol(&new_symbols[symbol_i++], s_table, nlist, map))
+				return (0);
 		shift += get_struct_size(NLIST, map->type.mtype);
 		++i;
 	}

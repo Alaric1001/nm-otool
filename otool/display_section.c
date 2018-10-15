@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 14:09:44 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 17:42:32 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/15 15:59:57 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "libft/string/string.h"
 #include "libft/output/output.h"
 #include "libft/output/obuff.h"
-#include "libft/math/math.h"
 
 #include <unistd.h>
 
@@ -42,37 +41,19 @@ static const t_section *get_section_and_segname(const t_segment *segments,
 	return (NULL);
 }
 
-static void		add_uint_to_obuff(uint32_t nb, size_t size, t_obuff* obuff)
+static size_t uint_size(t_type type)
 {
-	size_t	nb_len;
-	int		padding;
-
-	nb_len = ft_get_u_nb_len(nb, 16) + 1;
-	if (size == sizeof(uint8_t))
-		padding = (sizeof(uint8_t) * 8 / 4) - nb_len;
-	else
-		padding = (sizeof(uint32_t) * 8 / 4) - nb_len;
-	while (padding-- > 0)
-		ft_add_char_to_obuff('0', obuff);
-	ft_add_uint_base_to_obuff(nb, LIBFT_FMT_HEX, obuff);
-	ft_add_char_to_obuff(' ', obuff);
+	if (type.endian == BIG)
+		return (sizeof(uint32_t));
+	return (sizeof(uint8_t));
 }
 
-static void		add_addr_to_obuff(uint64_t addr, t_mtype mtype, t_obuff* obuff)
+static uint32_t uint_value(t_type type, const uint8_t* ptr)
 {
-	size_t	addr_len;
-	int		padding;
-
-	addr_len = ft_get_u_nb_len(addr, 16) + 1;
-	if (mtype == MACHO64)
-		padding = 16 - addr_len;
-	else
-		padding = 8 - addr_len;
-	while (padding-- > 0)
-		ft_add_char_to_obuff('0', obuff);
-	ft_add_uint_base_to_obuff(addr, LIBFT_FMT_HEX, obuff);
-	ft_add_char_to_obuff('\t', obuff);
-} 
+	if (type.endian == BIG)
+		return (*(const uint32_t*)ptr);
+	return (*ptr);
+}
 
 static uint8_t	disp_section_routine(const t_map *map, const t_section *section, t_obuff *buff)
 {
@@ -82,22 +63,23 @@ static uint8_t	disp_section_routine(const t_map *map, const t_section *section, 
 
 	cursor = section->offset;
 	line_state = 0;
-	add_addr_to_obuff(section->addr, map->type.mtype, buff);
 	while (cursor < section->offset + section->size)
 	{
+		if (!line_state)
+			add_addr_to_obuff(section->addr + cursor - section->offset,
+					map->type.mtype, buff);
 		if (!(tmp = safe_access(map->addr, cursor, map->size)))
 			return (0);
-		add_uint_to_obuff(*tmp, sizeof(uint8_t), buff);
-		cursor += sizeof(uint8_t);
-		if ((line_state += (sizeof(uint8_t) * 8) / 4) >= 32 &&
-				cursor < section->offset + section->size)
+		add_uint_to_obuff(uint_value(map->type, tmp), uint_size(map->type),
+				map->type.endian, buff);
+		cursor += uint_size(map->type);
+		if ((line_state += (uint_size(map->type) * 8) / 4) >= 32 ||
+				cursor >= section->offset + section->size)
 		{
 			ft_add_char_to_obuff('\n', buff);
-			add_addr_to_obuff(section->addr + cursor - section->offset, map->type.mtype, buff);
 			line_state = 0;
 		}
 	}
-	ft_add_char_to_obuff('\n', buff);
 	return (1);
 }
 
@@ -115,7 +97,10 @@ uint8_t		display_section(const t_map *map, const t_macho_data *data,
 		return (0);
 	}
 	ft_add_str_to_obuff("Contents of (", &buff);
-	ft_add_str_to_obuff(seg_name, &buff);
+	if (seg_name && *seg_name)
+		ft_add_str_to_obuff(seg_name, &buff);
+	else 
+		ft_add_upper_str_to_obuff(sect, &buff);
 	ft_add_char_to_obuff(',', &buff);
 	ft_add_str_to_obuff(current->name, &buff);
 	ft_add_str_to_obuff(") section\n", &buff);

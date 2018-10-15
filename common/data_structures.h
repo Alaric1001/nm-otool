@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 11:10:17 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/15 12:39:10 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct	s_macho_data
 	t_array		*symbols;
 	t_segment	*segments;
 }				t_macho_data;
+
 typedef struct	s_ar_header
 {
 	const struct ar_hdr	*head;

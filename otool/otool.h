@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:19:10 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 18:23:26 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/15 12:49:29 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,8 @@ uint8_t		display_section(const t_map *map, const t_macho_data *data,
 uint8_t		otool_execute(t_opt opt, const t_map *map,
 		uint8_t title_data, const char *file_name);
 
+typedef struct s_obuff	t_obuff;
+void		add_uint_to_obuff(uint32_t nb, size_t size, t_endianness e,
+				t_obuff* obuff);
+void		add_addr_to_obuff(uint64_t addr, t_mtype mtype, t_obuff* obuff);
 #endif
