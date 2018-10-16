@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/02 18:25:38 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 17:30:55 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 12:18:41 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static int		r_cmp(const t_symbol **a, const t_symbol **b)
 
 void			sort_symbols(t_opt opt, t_array *symbols)
 {
+	if (has_option(opt, OPT_NO_SORT))
+		return ;
 	if (has_option(opt, OPT_REVERSE))
 		ft_qsort(symbols, (int (*)(const void*, const void*))r_cmp);
 	else

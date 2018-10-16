@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/11 13:35:30 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 14:12:47 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft/output/obuff.h"
 
 static uint8_t	parse_command(const t_command *command, const t_map *map,
-					t_macho_data *mdata)
+		t_macho_data *mdata)
 {
 	uint32_t command_id;
 
@@ -33,29 +33,41 @@ static uint8_t	parse_command(const t_command *command, const t_map *map,
 	return (1);
 }
 
+static uint8_t	should_write(t_opt opt, const t_symbol *sym)
+{
+	if (has_option(opt, OPT_ONLY_UNDF) &&
+			(sym->nlist->n_type & N_TYPE) != N_UNDF)
+		return (0);
+	if (has_option(opt, OPT_NO_UNDF) &&
+			(sym->nlist->n_type & N_TYPE) == N_UNDF)
+		return (0);
+	return (sym->name != NULL);
+}
+
 static void		display_symbols(t_opt opt, const t_macho_data *data,
-					t_type type)
+		t_type type)
 {
 	size_t			i;
 	t_obuff			obuff;
 	const t_symbol	**sym;
 
 	i = 0;
-	(void)opt;
 	obuff = (t_obuff){.cursor = 0, .fd = 1};
 	while (i < data->symbols->nelems)
 	{
 		sym = (const t_symbol**)data->symbols->begin + i;
-		if ((*sym)->name)
+		if (should_write(opt, *sym))
 		{
-			add_value_to_obuff((*sym)->value, type.mtype,
-					(*sym)->nlist, &obuff);
-			ft_add_char_to_obuff(' ', &obuff);
-			add_type_to_obuff((*sym), data->segments, &obuff);
-			ft_add_char_to_obuff(' ', &obuff);
+			if (!has_option(opt, OPT_JUST_SYM))
+			{
+				add_value_to_obuff((*sym)->value, type.mtype,
+						(*sym)->nlist, &obuff);
+				ft_add_char_to_obuff(' ', &obuff);
+				add_type_to_obuff((*sym), data->segments, &obuff);
+				ft_add_char_to_obuff(' ', &obuff);
+			}
 			ft_add_str_to_obuff((*sym)->name, &obuff);
 			ft_add_char_to_obuff('\n', &obuff);
-			ft_flush_obuff(&obuff);
 		}
 		++i;
 	}

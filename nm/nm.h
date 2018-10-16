@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 13:48:44 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 13:29:53 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ uint8_t			sub_nm(t_opt opt, const t_array *maps, const t_file *file,
 					uint8_t write_title);
 
 # define OPT_REVERSE 0x2
+# define OPT_NO_SORT 0x4
+# define OPT_ONLY_UNDF 0x8
+# define OPT_NO_UNDF 0x10
+# define OPT_JUST_SYM 0x20
 
 t_opt			nm_opt_parser(t_opt curr_opt, const char *arg);
 #endif
