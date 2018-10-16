@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:40:11 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/16 14:12:47 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 14:37:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static uint8_t	should_write(t_opt opt, const t_symbol *sym)
 }
 
 static void		display_symbols(t_opt opt, const t_macho_data *data,
-		t_type type)
+		const t_map *map)
 {
 	size_t			i;
 	t_obuff			obuff;
@@ -55,21 +55,21 @@ static void		display_symbols(t_opt opt, const t_macho_data *data,
 	obuff = (t_obuff){.cursor = 0, .fd = 1};
 	while (i < data->symbols->nelems)
 	{
-		sym = (const t_symbol**)data->symbols->begin + i;
+		sym = (const t_symbol**)data->symbols->begin + i++;
 		if (should_write(opt, *sym))
 		{
 			if (!has_option(opt, OPT_JUST_SYM))
 			{
-				add_value_to_obuff((*sym)->value, type.mtype,
+				add_value_to_obuff((*sym)->value, map->type.mtype,
 						(*sym)->nlist, &obuff);
 				ft_add_char_to_obuff(' ', &obuff);
 				add_type_to_obuff((*sym), data->segments, &obuff);
 				ft_add_char_to_obuff(' ', &obuff);
 			}
-			ft_add_str_to_obuff((*sym)->name, &obuff);
+			ft_add_nstr_to_obuff((*sym)->name, map->size -
+					((uint8_t*)(*sym)->name - map->addr) - 1, &obuff);
 			ft_add_char_to_obuff('\n', &obuff);
 		}
-		++i;
 	}
 	ft_flush_obuff(&obuff);
 }
@@ -86,7 +86,7 @@ uint8_t			get_and_display_symbols(t_opt opt, const t_map *map)
 	if (!parse_macho(map, &mdata, parse_command))
 		return (0);
 	sort_symbols(opt, &symbols);
-	display_symbols(opt, &mdata, map->type);
+	display_symbols(opt, &mdata, map);
 	free_machodata(&mdata);
 	return (1);
 }
