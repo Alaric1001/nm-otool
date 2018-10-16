@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 14:09:44 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/16 10:31:23 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 11:09:50 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,7 @@ uint8_t					display_section(const t_map *map,
 
 	buff = (t_obuff) {.cursor = 0, .fd = 1};
 	if (!(current = get_section_and_segname(data->segments, sect, &seg_name)))
-	{
-		ft_putstr_fd("Section not found\n", STDERR_FILENO);
-		return (0);
-	}
+		return (1);
 	ft_add_str_to_obuff("Contents of (", &buff);
 	if (seg_name && *seg_name)
 		ft_add_str_to_obuff(seg_name, &buff);

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:51 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/16 10:33:55 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 11:07:06 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static uint8_t	open_map_and_otool(t_opt opt,
 
 static uint8_t	has_valid_options(t_opt opt)
 {
-	return (has_option(opt, OPT_TEXT) || has_option(opt, OPT_TEXT));
+	return (has_option(opt, OPT_TEXT) || has_option(opt, OPT_DATA));
 }
 
 int				main(int ac, const char *av[])
