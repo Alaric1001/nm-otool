@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 14:09:44 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/15 15:59:57 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:31:23 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include <unistd.h>
 
-static const t_section *get_section_and_segname(const t_segment *segments,
+static const t_section	*get_section_and_segname(const t_segment *segments,
 		const char *sect, const char **seg)
 {
 	const t_section		*section;
@@ -41,21 +41,22 @@ static const t_section *get_section_and_segname(const t_segment *segments,
 	return (NULL);
 }
 
-static size_t uint_size(t_type type)
+static size_t			uint_size(t_type type)
 {
 	if (type.endian == BIG)
 		return (sizeof(uint32_t));
 	return (sizeof(uint8_t));
 }
 
-static uint32_t uint_value(t_type type, const uint8_t* ptr)
+static uint32_t			uint_value(t_type type, const uint8_t *ptr)
 {
 	if (type.endian == BIG)
 		return (*(const uint32_t*)ptr);
 	return (*ptr);
 }
 
-static uint8_t	disp_section_routine(const t_map *map, const t_section *section, t_obuff *buff)
+static uint8_t			disp_section_routine(const t_map *map,
+		const t_section *section, t_obuff *buff)
 {
 	uint64_t		cursor;
 	unsigned int	line_state;
@@ -83,8 +84,8 @@ static uint8_t	disp_section_routine(const t_map *map, const t_section *section, 
 	return (1);
 }
 
-uint8_t		display_section(const t_map *map, const t_macho_data *data,
-				const char *sect)
+uint8_t					display_section(const t_map *map,
+		const t_macho_data *data, const char *sect)
 {
 	const t_section *current;
 	t_obuff			buff;
@@ -99,7 +100,7 @@ uint8_t		display_section(const t_map *map, const t_macho_data *data,
 	ft_add_str_to_obuff("Contents of (", &buff);
 	if (seg_name && *seg_name)
 		ft_add_str_to_obuff(seg_name, &buff);
-	else 
+	else
 		ft_add_upper_str_to_obuff(sect, &buff);
 	ft_add_char_to_obuff(',', &buff);
 	ft_add_str_to_obuff(current->name, &buff);

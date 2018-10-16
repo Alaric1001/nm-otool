@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/01 11:03:09 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 14:46:59 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:53:25 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static uint32_t		get_nsects(const t_segcommand *cmd, const t_map *map)
 }
 
 static void			get_section_data(const t_msection *sec,
-			const t_map *map, t_section *sect)
+		const t_map *map, t_section *sect)
 {
 	const t_msection64 *sec64;
 
@@ -43,8 +43,8 @@ static void			get_section_data(const t_msection *sec,
 	sect->offset = get_uint32(sec->offset, map->type.endian);
 }
 
-static t_segment	*malloc_last_segment(const t_segcommand *cmd, const t_map *map,
-						t_segment **segments)
+static t_segment	*malloc_last_segment(const t_segcommand *cmd,
+		const t_map *map, t_segment **segments)
 {
 	const t_segcommand64 *cmd64;
 
@@ -55,13 +55,9 @@ static t_segment	*malloc_last_segment(const t_segcommand *cmd, const t_map *map,
 	if (map->type.mtype == MACHO64)
 	{
 		cmd64 = (const t_segcommand64*)cmd;
-		(*segments)->vmaddr = get_uint64(cmd64->vmaddr, map->type.endian);
-		(*segments)->vmsize = get_uint64(cmd64->vmsize, map->type.endian);
 		(*segments)->foffset = get_uint64(cmd64->fileoff, map->type.endian);
 		(*segments)->fsize = get_uint64(cmd64->filesize, map->type.endian);
 	}
-	(*segments)->vmaddr = get_uint32(cmd->vmaddr, map->type.endian);
-	(*segments)->vmsize = get_uint32(cmd->vmsize, map->type.endian);
 	(*segments)->foffset = get_uint32(cmd->fileoff, map->type.endian);
 	(*segments)->fsize = get_uint32(cmd->filesize, map->type.endian);
 	return (*segments);
@@ -76,7 +72,7 @@ static t_section	*get_section_at(t_array *sections, uint32_t index)
 }
 
 uint8_t				get_sections(const t_segcommand *cmd, const t_map *map,
-						t_segment **segments)
+		t_segment **segments)
 {
 	uint32_t			nsects;
 	const t_msection	*msection;
@@ -90,7 +86,7 @@ uint8_t				get_sections(const t_segcommand *cmd, const t_map *map,
 			map->type.endian);
 	last->sections.begin = ft_memalloc(sizeof(t_section) * nsects);
 	if (!(msection = (const t_msection*)safe_access(cmd,
-			get_struct_size(SEGMENT_CMD, map->type.mtype), map->size)))
+					get_struct_size(SEGMENT_CMD, map->type.mtype), map->size)))
 		return (0);
 	i = 0;
 	while (i < nsects)
@@ -99,7 +95,7 @@ uint8_t				get_sections(const t_segcommand *cmd, const t_map *map,
 		ft_memcpy(section->name, msection->sectname, 16);
 		get_section_data(msection, map, section);
 		if (!(msection = (const t_msection*)safe_access(msection,
-			get_struct_size(SECTION, map->type.mtype), map->size)))
+						get_struct_size(SECTION, map->type.mtype), map->size)))
 			return (0);
 	}
 	return (1);

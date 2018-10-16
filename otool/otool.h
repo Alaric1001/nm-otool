@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:19:10 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/15 12:49:29 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:26:58 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define OPT_TEXT 0x2
 # define OPT_DATA 0x4
+
 t_opt		otool_opt_parser(t_opt curr_opt, const char *arg);
 uint8_t		otool(t_opt opt, const t_map *map, const t_file *file,
 					int write_title);
@@ -32,6 +33,6 @@ uint8_t		otool_execute(t_opt opt, const t_map *map,
 
 typedef struct s_obuff	t_obuff;
 void		add_uint_to_obuff(uint32_t nb, size_t size, t_endianness e,
-				t_obuff* obuff);
-void		add_addr_to_obuff(uint64_t addr, t_mtype mtype, t_obuff* obuff);
+				t_obuff *obuff);
+void		add_addr_to_obuff(uint64_t addr, t_mtype mtype, t_obuff *obuff);
 #endif

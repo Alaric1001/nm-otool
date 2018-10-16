@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:18:40 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 15:57:31 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:35:21 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 static void	unknown_cmd(const char *cmd)
 {
-		ft_putstr_fd("Unknown command line argument '", STDERR_FILENO);
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd("'.\n", STDERR_FILENO);
+	ft_putstr_fd("Unknown command line argument '", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd("'.\n", STDERR_FILENO);
 }
 
 t_opt		otool_opt_parser(t_opt curr_opt, const char *arg)

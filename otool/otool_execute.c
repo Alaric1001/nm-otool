@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 12:54:40 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 18:38:20 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:34:44 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <unistd.h>
 
-static uint8_t parse_command(const t_command *command, const t_map *map,
+static uint8_t	parse_command(const t_command *command, const t_map *map,
 				t_macho_data *mdata)
 {
 	uint32_t command_id;
@@ -31,13 +31,13 @@ static uint8_t parse_command(const t_command *command, const t_map *map,
 	return (1);
 }
 
-static void not_an_object(const char *fname)
+static void		not_an_object(const char *fname)
 {
 	ft_putstr(fname);
 	ft_putstr(": is not an object file\n");
 }
 
-uint8_t		otool_execute(t_opt opt, const t_map *map,
+uint8_t			otool_execute(t_opt opt, const t_map *map,
 		uint8_t title_data, const char *file_name)
 {
 	t_macho_data	mdata;

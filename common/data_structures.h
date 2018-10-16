@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 19:30:46 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/15 12:39:10 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:54:09 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ typedef struct	s_segments
 {
 	t_array				sections;
 	char				name[16];
-	uint64_t			vmaddr;
-	uint64_t			vmsize;
 	uint64_t			foffset;
 	uint64_t			fsize;
 	struct s_segments	*next;

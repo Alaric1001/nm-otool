@@ -6,14 +6,14 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 16:51:01 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/15 15:51:14 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:56:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm/nm.h"
 #include "common/common.h"
 
-static uint8_t		add_symbol(t_symbol **symbols, const char *sym_tab,
+static uint8_t	add_symbol(t_symbol **symbols, const char *sym_tab,
 		const t_nlist *nlist, const t_map *map)
 {
 	const t_nlist64 *nlist64;

@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 15:27:51 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/15 14:50:50 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:33:55 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-uint8_t			sub_otool(t_opt opt, const t_array *maps, const t_file *file,
-		uint8_t write_title)
+uint8_t			sub_otool(t_opt opt, const t_array *maps,
+		const t_file *file, uint8_t write_title)
 {
 	const t_map		*first_map;
 	uint32_t		i;
@@ -45,8 +45,8 @@ uint8_t			sub_otool(t_opt opt, const t_array *maps, const t_file *file,
 	return (0);
 }
 
-uint8_t	otool(t_opt opt, const t_map *map, const t_file *file,
-					int title_bytecode)
+uint8_t			otool(t_opt opt, const t_map *map,
+		const t_file *file, int title_bytecode)
 {
 	t_array maps;
 
@@ -74,8 +74,8 @@ uint8_t	otool(t_opt opt, const t_map *map, const t_file *file,
 	return (0);
 }
 
-static uint8_t	open_map_and_otool(t_opt opt, const char *files[],
-						int has_multiple_files)
+static uint8_t	open_map_and_otool(t_opt opt,
+		const char *files[], int has_multiple_files)
 {
 	int		ret;
 	t_file	file;
@@ -100,12 +100,13 @@ static uint8_t	open_map_and_otool(t_opt opt, const char *files[],
 	return (ret);
 }
 
-static uint8_t has_valid_options(t_opt opt)
+static uint8_t	has_valid_options(t_opt opt)
 {
 	return (has_option(opt, OPT_TEXT) || has_option(opt, OPT_TEXT));
 }
 
-int main(int ac, const char *av[]) {
+int				main(int ac, const char *av[])
+{
 	const char	**files;
 	t_args		args;
 	t_opt		opt;

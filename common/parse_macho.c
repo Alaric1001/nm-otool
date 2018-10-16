@@ -6,13 +6,13 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/11 13:13:28 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/12 15:59:26 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 10:46:36 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common/common.h"
 
-uint8_t	parse_macho(const t_map *map, t_macho_data *mdata,
+uint8_t		parse_macho(const t_map *map, t_macho_data *mdata,
 		t_cmd_actions actions)
 {
 	const t_header64	*header;
