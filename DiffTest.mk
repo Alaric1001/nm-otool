@@ -12,7 +12,7 @@ OTOOL_BINS	:= $(addprefix otool\ , $(BINS))
 OTOOL_LIBS	:= $(addprefix otool\ , $(LIBS))
 
 .PHONY: test_all
-test_all: test_nm_bin test_nm_libs
+test_all: test_nm_bin test_nm_libs test_otool_bin test_otool_libs
 
 .PHONY: test_nm_bin
 test_nm_bin: all $(FAIL_DIRS) $(NM_BINS)
@@ -36,7 +36,7 @@ nm\ /%:
 	fi
 
 otool\ /%:
-	$(eval DIFF_R := $(shell ./DiffTest.sh otool "-t" "/$*"; echo $$?))
+	$(eval DIFF_R := $(shell ./DiffTest.sh otool $(OTOOL_OPT) "/$*"; echo $$?))
 	@if [ $(DIFF_R) -gt 0 ]; \
 	then \
 		$(ECHO) "["$(RED)fail$(RESET)"] -" "$@" 1>&2; \
