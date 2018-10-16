@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/24 11:30:35 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/16 10:37:18 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 16:52:16 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define COMMON_H
 
 # include "common/data_structures.h"
-# include "opt/opt.h"
+# include "common/opt/opt.h"
 
 # define PARSE_ERR "The file was not recognized as a valid object file\n"
 # define CURRENT_CPU 0x1000007

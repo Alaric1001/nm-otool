@@ -6,14 +6,14 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/10 18:19:10 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/16 10:26:58 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 16:52:46 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OTOOL_H
 # define OTOOL_H
 
-# include "opt/opt.h"
+# include "common/opt/opt.h"
 # include "common/common.h"
 
 # include "libft/memory/memory.h"

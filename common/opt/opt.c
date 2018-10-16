@@ -6,11 +6,11 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/20 17:43:31 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/10 18:49:31 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 16:53:52 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "opt/opt.h"
+#include "common/opt/opt.h"
 
 #include "libft/string/string.h"
 #include "libft/memory/memory.h"

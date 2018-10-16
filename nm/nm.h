@@ -6,7 +6,7 @@
 /*   By: asenat <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 12:33:19 by asenat            #+#    #+#             */
-/*   Updated: 2018/10/16 13:29:53 by asenat           ###   ########.fr       */
+/*   Updated: 2018/10/16 16:52:29 by asenat           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define NM_H
 
 # include "common/data_structures.h"
-# include "opt/opt.h"
+# include "common/opt/opt.h"
 
 # include "libft/output/obuff.h"
 

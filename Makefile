@@ -6,7 +6,7 @@
 #    By: asenat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 17:26:46 by asenat            #+#    #+#              #
-#    Updated: 2018/10/04 17:45:45 by asenat           ###   ########.fr        #
+#    Updated: 2018/10/16 16:53:27 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ endif
 ## Sources directories
 #
 TEST_DIRS	:= tests
-SRC_DIRS	:= common nm otool opt
+SRC_DIRS	:= common common/opt nm otool
 #
 
 ## Colors
@@ -101,4 +101,4 @@ re: fclean all
 makedeps:
 	python3.7 libft/gen_make_sources.py -e nm nm
 	python3.7 libft/gen_make_sources.py -e otool otool
-	python3.7 libft/gen_make_sources.py common opt
+	python3.7 libft/gen_make_sources.py common common/opt
