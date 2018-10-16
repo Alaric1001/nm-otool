@@ -6,7 +6,7 @@
 #    By: asenat <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/07 17:26:46 by asenat            #+#    #+#              #
-#    Updated: 2018/10/16 16:53:27 by asenat           ###   ########.fr        #
+#    Updated: 2018/10/16 17:15:25 by asenat           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_FLAGS	:= -L./libft -lft
 NM		:= ft_nm
 OTOOL		:= ft_otool
 CC 		:= clang
-CFLAGS		:= -I. -Wall -Wextra -Werror -g
+CFLAGS		:= -I. -Wall -Wextra -Werror
 LFLAGS		:= $(LIBFT_FLAGS)
 RM		:= rm -f
 OBJECT_DIR	:= obj
